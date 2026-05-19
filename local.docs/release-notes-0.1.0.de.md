@@ -12,7 +12,7 @@ Diese Version veröffentlicht OZ Rewards mit Wallet-Belohnungen für wiederkehre
 - Spieler können Rewards-Nachrichten in der gemeinsamen Plugin-Einstellungsoberfläche ein- und ausschalten.
 - Optionale Discord-Benachrichtigungen über OZ Discord Connect.
 
-## Bekannter Hinweis
+## Bekannte Fehler
 
 - Die Belohnung für Blitztreffer funktioniert noch nicht korrekt. Der aktuelle Workaround erkennt nur generischen Umgebungsschaden während Gewitter-, Sturm- oder Hurrikan-Wetter und kann echte Blitztreffer daher noch nicht zuverlässig unterscheiden.
 
