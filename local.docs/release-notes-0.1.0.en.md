@@ -20,7 +20,7 @@ This release publishes OZ Rewards with wallet rewards for recurring activity, co
 
 Make sure the required plugins are installed:
 
-- `OZTools` `0.17.1` or newer
+- `OZTools` `0.18.0` or newer
 - `OZWallet` for reward deposits
 - optionally `OZDiscordConnect` for Discord messages
 - `OZRewards` `0.1.0`
