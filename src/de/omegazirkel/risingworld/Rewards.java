@@ -20,6 +20,7 @@ import de.omegazirkel.risingworld.tools.I18n;
 import de.omegazirkel.risingworld.tools.OZLogger;
 import de.omegazirkel.risingworld.tools.PlayerSettings;
 import de.omegazirkel.risingworld.tools.db.SQLiteConnectionFactory;
+import de.omegazirkel.risingworld.tools.settings.PlayerPluginAdminSettings;
 import de.omegazirkel.risingworld.tools.ui.AssetManager;
 import de.omegazirkel.risingworld.tools.ui.MenuItem;
 import de.omegazirkel.risingworld.tools.ui.PlayerPluginSettingsOverlay;
@@ -94,6 +95,9 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
         DiscordConnect.init(this);
         PlayerPluginSettingsOverlay.registerPlayerPluginSettings(new RewardsPlayerPluginSettings(getDescription("version")));
         PlayerPluginSettingsOverlay.registerPlayerPluginData(new RewardsPlayerPluginData(getDescription("version")));
+        PlayerPluginSettingsOverlay.registerPlayerPluginAdminSettings(
+                new PlayerPluginAdminSettings(name, getDescription("version"), () -> s.adminSettingsEntries(),
+                        s::initSettings));
         logger().info(this.getName() + " Plugin is enabled version:" + this.getDescription("version"));
     }
 

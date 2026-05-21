@@ -16,6 +16,9 @@ import org.apache.logging.log4j.Level;
 
 import de.omegazirkel.risingworld.Rewards;
 import de.omegazirkel.risingworld.tools.OZLogger;
+import de.omegazirkel.risingworld.tools.settings.AdminSettingsEntry;
+import de.omegazirkel.risingworld.tools.settings.AdminSettingsType;
+import de.omegazirkel.risingworld.tools.settings.SettingsFileEditor;
 
 public class PluginSettings {
     private static PluginSettings instance = null;
@@ -50,6 +53,7 @@ public class PluginSettings {
     public long discordRewardsChannelId = 0;
     public boolean sendPluginWelcome = false;
     public String logLevel = Level.ALL.name();
+    public boolean reloadOnChange = true;
 
     private static OZLogger logger() {
         return OZLogger.getInstance("OZ.Rewards.Settings");
@@ -126,6 +130,7 @@ public class PluginSettings {
             discordRewardsChannelId = lng(settings, "discordRewardsChannelId", discordRewardsChannelId);
             sendPluginWelcome = bool(settings, "sendPluginWelcome", sendPluginWelcome);
             logLevel = settings.getProperty("logLevel", "ALL");
+            reloadOnChange = bool(settings, "reloadOnChange", reloadOnChange);
 
             logger().info(plugin.getName() + " Plugin settings loaded");
             logger().info("Loglevel is set to " + logLevel);
@@ -134,6 +139,47 @@ public class PluginSettings {
             logger().error("IOException on initSettings: " + ex.getMessage());
             ex.printStackTrace();
         }
+    }
+
+    public List<AdminSettingsEntry> adminSettingsEntries() {
+        return List.of(
+                entry("logLevel", "Log level", "Controls Rewards logging verbosity.", logLevel, "ALL",
+                        AdminSettingsType.STRING),
+                entry("reloadOnChange", "Reload on change",
+                        "Documents that Rewards settings reload when settings.properties changes.", reloadOnChange,
+                        "true", AdminSettingsType.BOOLEAN),
+                entry("sendPluginWelcome", "Welcome message", "Shows a short Rewards message when a player joins.",
+                        sendPluginWelcome, "false", AdminSettingsType.BOOLEAN),
+                entry("dailyLogin.enabled", "Daily login", "Enables daily login rewards.", dailyLoginEnabled, "true",
+                        AdminSettingsType.BOOLEAN),
+                entry("dailyLogin.baseBonus", "Daily login base", "Base amount for daily login rewards.",
+                        Math.round(dailyLoginBaseBonus), "10", AdminSettingsType.INTEGER),
+                entry("enemyNpcKill.enabled", "Enemy NPC rewards", "Enables enemy NPC kill rewards.",
+                        enemyNpcKillEnabled, "true", AdminSettingsType.BOOLEAN),
+                entry("enemyNpcKill.reward", "Enemy NPC reward", "Default reward for matched enemy NPC kills.",
+                        enemyNpcKillReward, "10", AdminSettingsType.INTEGER),
+                entry("aggressiveAnimalKill.enabled", "Aggressive animal rewards",
+                        "Enables aggressive animal kill rewards.", aggressiveAnimalKillEnabled, "true",
+                        AdminSettingsType.BOOLEAN),
+                entry("lightning.enabled", "Lightning rewards", "Enables lightning/storm rewards.", lightningEnabled,
+                        "true", AdminSettingsType.BOOLEAN));
+    }
+
+    private AdminSettingsEntry entry(String key, String label, String description, Object value, String defaultValue,
+            AdminSettingsType type) {
+        return new AdminSettingsEntry(
+                key,
+                label,
+                description,
+                String.valueOf(value),
+                defaultValue,
+                type,
+                false,
+                newValue -> SettingsFileEditor.writeValue(settingsPath(), key, newValue));
+    }
+
+    private Path settingsPath() {
+        return Paths.get((plugin.getPath() != null ? plugin.getPath() : ".") + "/settings.properties");
     }
 
     public long rewardForDefinition(String definitionName, long defaultReward, Map<String, Long> overrides) {
