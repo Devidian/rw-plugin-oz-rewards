@@ -10,6 +10,7 @@ import java.time.ZoneOffset;
 import de.omegazirkel.risingworld.rewards.DiscordConnect;
 import de.omegazirkel.risingworld.rewards.PluginGUI;
 import de.omegazirkel.risingworld.rewards.PluginSettings;
+import de.omegazirkel.risingworld.rewards.RewardsPluginInfoStatusProvider;
 import de.omegazirkel.risingworld.rewards.SectorDiscoveryStore;
 import de.omegazirkel.risingworld.rewards.Wallet;
 import de.omegazirkel.risingworld.rewards.ui.RewardsPlayerPluginData;
@@ -24,6 +25,7 @@ import de.omegazirkel.risingworld.tools.settings.PlayerPluginAdminSettings;
 import de.omegazirkel.risingworld.tools.ui.AssetManager;
 import de.omegazirkel.risingworld.tools.ui.MenuItem;
 import de.omegazirkel.risingworld.tools.ui.PlayerPluginSettingsOverlay;
+import de.omegazirkel.risingworld.tools.ui.PluginInfoStatusProviders;
 import de.omegazirkel.risingworld.tools.ui.PluginMenuManager;
 import net.risingworld.api.Plugin;
 import net.risingworld.api.Server;
@@ -98,11 +100,16 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
         PlayerPluginSettingsOverlay.registerPlayerPluginAdminSettings(
                 new PlayerPluginAdminSettings(name, getDescription("version"), () -> s.adminSettingsEntries(),
                         s::initSettings));
+        PluginInfoStatusProviders
+                .registerProvider(new RewardsPluginInfoStatusProvider(this, getDescription("version")));
         logger().info(this.getName() + " Plugin is enabled version:" + this.getDescription("version"));
     }
 
     @Override
     public void onDisable() {
+        if (name != null) {
+            PluginInfoStatusProviders.unregisterProvider(name);
+        }
         if (sqliteCon != null) {
             try {
                 sqliteCon.close();
@@ -133,13 +140,7 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
 
         switch (cmdParts[1]) {
             case "status":
-                player.sendTextMessage(c.okay + name + ":> " + c.text + t.get("TC_CMD_STATUS", player)
-                        .replace("PH_VERSION", getDescription("version"))
-                        .replace("PH_WALLET_STATUS", Wallet.isAvailable() ? t.get("TC_STATUS_AVAILABLE", player)
-                                : t.get("TC_STATUS_MISSING", player))
-                        .replace("PH_DISCORD_STATUS",
-                                DiscordConnect.isAvailable() ? t.get("TC_STATUS_AVAILABLE", player)
-                                        : t.get("TC_STATUS_MISSING", player)));
+                PluginInfoStatusProviders.show(player, name);
                 break;
             case "help":
                 player.sendTextMessage(t.get("TC_CMD_HELP", player).replace("PH_PLUGIN_CMD", COMMAND));

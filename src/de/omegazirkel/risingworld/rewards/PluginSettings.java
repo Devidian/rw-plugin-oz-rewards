@@ -56,7 +56,7 @@ public class PluginSettings {
     public boolean reloadOnChange = true;
 
     private static OZLogger logger() {
-        return OZLogger.getInstance("OZ.Rewards.Settings");
+        return Rewards.logger();
     }
 
     public static PluginSettings getInstance(Rewards p) {
@@ -143,6 +143,7 @@ public class PluginSettings {
 
     public List<AdminSettingsEntry> adminSettingsEntries() {
         return List.of(
+                AdminSettingsEntry.group("general", "General", "Logging, reload, and welcome behavior."),
                 entry("logLevel", "Log level", "Controls Rewards logging verbosity.", logLevel, "ALL",
                         AdminSettingsType.STRING),
                 entry("reloadOnChange", "Reload on change",
@@ -150,19 +151,83 @@ public class PluginSettings {
                         "true", AdminSettingsType.BOOLEAN),
                 entry("sendPluginWelcome", "Welcome message", "Shows a short Rewards message when a player joins.",
                         sendPluginWelcome, "false", AdminSettingsType.BOOLEAN),
+                AdminSettingsEntry.group("dailyLogin", "Daily login", "Daily login reward formula."),
                 entry("dailyLogin.enabled", "Daily login", "Enables daily login rewards.", dailyLoginEnabled, "true",
                         AdminSettingsType.BOOLEAN),
                 entry("dailyLogin.baseBonus", "Daily login base", "Base amount for daily login rewards.",
                         Math.round(dailyLoginBaseBonus), "10", AdminSettingsType.INTEGER),
+                readOnlyEntry("dailyLogin.factor", "Daily login factor",
+                        "Decimal streak multiplier for daily login rewards.", dailyLoginFactor, "1.10",
+                        AdminSettingsType.STRING),
+                entry("dailyLogin.streakLimit", "Daily login streak limit",
+                        "Maximum exponent used by the daily login streak formula.", dailyLoginStreakLimit, "7",
+                        AdminSettingsType.INTEGER),
+                AdminSettingsEntry.group("enemyNpc", "Enemy NPC kills", "Enemy NPC kill reward detection and payout."),
                 entry("enemyNpcKill.enabled", "Enemy NPC rewards", "Enables enemy NPC kill rewards.",
                         enemyNpcKillEnabled, "true", AdminSettingsType.BOOLEAN),
                 entry("enemyNpcKill.reward", "Enemy NPC reward", "Default reward for matched enemy NPC kills.",
                         enemyNpcKillReward, "10", AdminSettingsType.INTEGER),
+                readOnlyEntry("enemyNpcKill.typeIds", "Enemy NPC type ids",
+                        "Comma-separated NPC type ids treated as rewardable enemies.",
+                        joinIntegers(enemyNpcTypeIds), "210,215", AdminSettingsType.STRING),
+                readOnlyEntry("enemyNpcKill.definitionNames", "Enemy NPC definitions",
+                        "Comma-separated definition-name fragments treated as rewardable enemies.",
+                        String.join(",", enemyNpcDefinitionNames), "bandit,skeleton", AdminSettingsType.STRING),
+                readOnlyEntry("enemyNpcKill.rewardOverrides", "Enemy NPC reward overrides",
+                        "Comma-separated definition reward overrides such as skeleton=5.",
+                        joinOverrides(enemyNpcKillRewardOverrides), "", AdminSettingsType.STRING),
+                AdminSettingsEntry.group("animals", "Aggressive animals", "Aggressive animal kill reward settings."),
                 entry("aggressiveAnimalKill.enabled", "Aggressive animal rewards",
                         "Enables aggressive animal kill rewards.", aggressiveAnimalKillEnabled, "true",
                         AdminSettingsType.BOOLEAN),
+                entry("aggressiveAnimalKill.reward", "Aggressive animal reward",
+                        "Default reward for aggressive animal kills.", aggressiveAnimalKillReward, "5",
+                        AdminSettingsType.INTEGER),
+                readOnlyEntry("aggressiveAnimalKill.rewardOverrides", "Animal reward overrides",
+                        "Comma-separated animal reward overrides such as wolf=15.",
+                        joinOverrides(aggressiveAnimalKillRewardOverrides), "", AdminSettingsType.STRING),
+                AdminSettingsEntry.group("survival", "Survival milestones",
+                        "Lightning, orbit, and hell visit reward settings."),
                 entry("lightning.enabled", "Lightning rewards", "Enables lightning/storm rewards.", lightningEnabled,
-                        "true", AdminSettingsType.BOOLEAN));
+                        "true", AdminSettingsType.BOOLEAN),
+                entry("lightning.reward", "Lightning reward", "Reward paid after the lightning workaround triggers.",
+                        lightningReward, "2500", AdminSettingsType.INTEGER),
+                readOnlyEntry("lightning.messageType", "Lightning message type",
+                        "Announcement mode for lightning rewards: yell or chat.", lightningMessageType, "yell",
+                        AdminSettingsType.STRING),
+                entry("orbit.enabled", "Orbit reward", "Enables the first orbit visit reward.", orbitEnabled, "true",
+                        AdminSettingsType.BOOLEAN),
+                entry("orbit.chunkY", "Orbit chunk Y", "Minimum vertical chunk for the orbit reward.", orbitChunkY,
+                        "64", AdminSettingsType.INTEGER),
+                entry("orbit.reward", "Orbit reward amount", "Reward for first orbit visit.", orbitReward, "5000",
+                        AdminSettingsType.INTEGER),
+                entry("hell.enabled", "Hell reward", "Enables the first hell visit reward.", hellEnabled, "true",
+                        AdminSettingsType.BOOLEAN),
+                entry("hell.chunkY", "Hell chunk Y", "Maximum vertical chunk for the hell reward.", hellChunkY,
+                        "-10", AdminSettingsType.INTEGER),
+                entry("hell.reward", "Hell reward amount", "Reward for first hell visit.", hellReward, "500",
+                        AdminSettingsType.INTEGER),
+                AdminSettingsEntry.group("sectorDiscovery", "Sector discovery",
+                        "Sector discovery reward formula and announcement behavior."),
+                entry("sectorDiscovery.enabled", "Sector discovery rewards",
+                        "Enables sector discovery rewards.", sectorDiscoveryEnabled, "true",
+                        AdminSettingsType.BOOLEAN),
+                readOnlyEntry("sectorDiscovery.mode", "Sector discovery mode",
+                        "Reward mode: firstOnly or perPlayer.", sectorDiscoveryMode, "perPlayer",
+                        AdminSettingsType.STRING),
+                entry("sectorDiscovery.baseReward", "Sector base reward",
+                        "Base reward multiplied by sector distance.", sectorDiscoveryBaseReward, "50",
+                        AdminSettingsType.INTEGER),
+                readOnlyEntry("sectorDiscovery.firstDiscovererMultiplier", "First discoverer multiplier",
+                        "Decimal multiplier for the global first discoverer.",
+                        sectorDiscoveryFirstDiscovererMultiplier, "2.0", AdminSettingsType.STRING),
+                readOnlyEntry("sectorDiscovery.messageType", "Sector message type",
+                        "Announcement mode for first discoveries: yell or chat.", sectorDiscoveryMessageType, "yell",
+                        AdminSettingsType.STRING),
+                AdminSettingsEntry.group("discord", "Discord", "Optional Discord reward announcements."),
+                entry("discordRewardsChannelId", "Discord rewards channel",
+                        "Discord channel id for reward announcements; 0 disables Discord reward messages.",
+                        discordRewardsChannelId, "0", AdminSettingsType.STRING));
     }
 
     private AdminSettingsEntry entry(String key, String label, String description, Object value, String defaultValue,
@@ -178,8 +243,32 @@ public class PluginSettings {
                 newValue -> SettingsFileEditor.writeValue(settingsPath(), key, newValue));
     }
 
+    private AdminSettingsEntry readOnlyEntry(String key, String label, String description, Object value,
+            String defaultValue, AdminSettingsType type) {
+        return new AdminSettingsEntry(
+                key,
+                label,
+                description,
+                String.valueOf(value),
+                defaultValue,
+                type,
+                false,
+                null);
+    }
+
     private Path settingsPath() {
         return Paths.get((plugin.getPath() != null ? plugin.getPath() : ".") + "/settings.properties");
+    }
+
+    private String joinIntegers(List<Integer> values) {
+        return values.stream().map(String::valueOf).reduce((left, right) -> left + "," + right).orElse("");
+    }
+
+    private String joinOverrides(Map<String, Long> values) {
+        return values.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .reduce((left, right) -> left + "," + right)
+                .orElse("");
     }
 
     public long rewardForDefinition(String definitionName, long defaultReward, Map<String, Long> overrides) {

@@ -29,7 +29,7 @@ Wallet and Discord Connect are called by reflection. Missing Wallet disables dep
 | Command | Description |
 | ------- | ----------- |
 | `/rewards open` | Open the plugin menu |
-| `/rewards status` | Show Wallet and Discord availability |
+| `/rewards status` | Open the shared Tools Info/Status panel |
 | `/rewards help` | Show command help |
 
 ## Settings

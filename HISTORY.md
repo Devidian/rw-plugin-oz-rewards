@@ -4,6 +4,10 @@
 
 ## [unreleased]
 
+- feat: add shared Tools Info/Status panel content for Rewards and route `/rewards status` to it
+- feat: complete grouped admin settings metadata and i18n labels for Rewards settings
+- refactor: route Rewards settings logging through the main `OZ.Rewards` logger
+
 ## [0.1.0] - 2026-05-19
 
 - fix: reward defensive-aggressive animal kills such as wolves
