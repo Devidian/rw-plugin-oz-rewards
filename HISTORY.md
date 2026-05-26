@@ -4,6 +4,8 @@
 
 ## [unreleased]
 
+## [0.2.0] - 2026-05-26 | Shared plugin status panel
+
 - feat: use the shared Tools info icon for the Rewards radial Info/Status entry
 - feat: add shared Tools Info/Status panel content for Rewards and route `/rewards status` to it
 - feat: complete grouped admin settings metadata and i18n labels for Rewards settings
