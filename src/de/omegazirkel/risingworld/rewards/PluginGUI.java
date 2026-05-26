@@ -3,8 +3,10 @@ package de.omegazirkel.risingworld.rewards;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.omegazirkel.risingworld.Rewards;
 import de.omegazirkel.risingworld.tools.ui.AssetManager;
 import de.omegazirkel.risingworld.tools.ui.MenuItem;
+import de.omegazirkel.risingworld.tools.ui.PluginInfoStatusProviders;
 import de.omegazirkel.risingworld.tools.ui.PluginMenuManager;
 import net.risingworld.api.Plugin;
 import net.risingworld.api.objects.Player;
@@ -29,10 +31,7 @@ public class PluginGUI {
 
     public void openMainMenu(Player uiPlayer) {
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(AssetManager.getIcon("icon-oz-rewards"), "Status", p -> {
-            p.hideRadialMenu(true);
-            p.executeCommand("/rewards status");
-        }));
+        menuItems.add(PluginInfoStatusProviders.menuItem("Info / Status", Rewards.name));
         menuItems.add(MenuItem.closeMenu(uiPlayer));
         PluginMenuManager.showMenu(uiPlayer, menuItems);
     }

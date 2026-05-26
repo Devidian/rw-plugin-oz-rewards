@@ -4,6 +4,7 @@
 
 ## [unreleased]
 
+- feat: use the shared Tools info icon for the Rewards radial Info/Status entry
 - feat: add shared Tools Info/Status panel content for Rewards and route `/rewards status` to it
 - feat: complete grouped admin settings metadata and i18n labels for Rewards settings
 - refactor: route Rewards settings logging through the main `OZ.Rewards` logger

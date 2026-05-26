@@ -32,6 +32,8 @@ Wallet and Discord Connect are called by reflection. Missing Wallet disables dep
 | `/rewards status` | Open the shared Tools Info/Status panel |
 | `/rewards help` | Show command help |
 
+The Rewards radial menu uses the shared Tools Info/Status icon for the same status panel.
+
 ## Settings
 
 Settings are copied from `settings.default.properties` to `settings.properties` on first run.

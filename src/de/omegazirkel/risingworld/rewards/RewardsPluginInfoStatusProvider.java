@@ -25,6 +25,7 @@ public class RewardsPluginInfoStatusProvider implements PluginInfoStatusProvider
     public String getInfo(Player player) {
         return t().get("TC_REWARDS_INFO_PANEL_INFO", player)
                 .replace("PH_PLUGIN_NAME", pluginName)
+                .replace("PH_VERSION", version)
                 .replace("PH_PLUGIN_CMD", "rewards");
     }
 
@@ -32,7 +33,6 @@ public class RewardsPluginInfoStatusProvider implements PluginInfoStatusProvider
     public String getStatus(Player player) {
         PluginSettings settings = PluginSettings.getInstance();
         return t().get("TC_REWARDS_INFO_PANEL_STATUS", player)
-                .replace("PH_VERSION", version)
                 .replace("PH_WALLET_STATUS", available(Wallet.isAvailable()))
                 .replace("PH_DISCORD_STATUS", available(DiscordConnect.isAvailable()))
                 .replace("PH_DAILY_LOGIN", String.valueOf(settings.dailyLoginEnabled))
@@ -41,12 +41,7 @@ public class RewardsPluginInfoStatusProvider implements PluginInfoStatusProvider
                 .replace("PH_LIGHTNING", String.valueOf(settings.lightningEnabled))
                 .replace("PH_ORBIT", String.valueOf(settings.orbitEnabled))
                 .replace("PH_HELL", String.valueOf(settings.hellEnabled))
-                .replace("PH_SECTOR_DISCOVERY", String.valueOf(settings.sectorDiscoveryEnabled))
-                .replace("PH_DISCORD_CHANNEL", settings.discordRewardsChannelId == 0 ? "-"
-                        : String.valueOf(settings.discordRewardsChannelId))
-                .replace("PH_LOG_LEVEL", settings.logLevel)
-                .replace("PH_RELOAD_ON_CHANGE", String.valueOf(settings.reloadOnChange))
-                .replace("PH_WELCOME_MESSAGE", String.valueOf(settings.sendPluginWelcome));
+                .replace("PH_SECTOR_DISCOVERY", String.valueOf(settings.sectorDiscoveryEnabled));
     }
 
     private I18n t() {
