@@ -5,6 +5,7 @@ import de.omegazirkel.risingworld.tools.I18n;
 import de.omegazirkel.risingworld.tools.ui.BasePlayerPluginSettingsPanel;
 import de.omegazirkel.risingworld.tools.ui.OZUIElement;
 import de.omegazirkel.risingworld.tools.ui.PlayerPluginSettings;
+import de.omegazirkel.risingworld.tools.ui.PluginShortcutVisibility;
 import net.risingworld.api.objects.Player;
 
 public class RewardsPlayerPluginSettings extends PlayerPluginSettings {
@@ -28,6 +29,7 @@ public class RewardsPlayerPluginSettings extends PlayerPluginSettings {
             @Override
             protected void redrawContent() {
                 flexWrapper.removeAllChilds();
+                flexWrapper.addChild(booleanSetting(uiPlayer, shortcutKey(), "TC_LABEL_REWARDS_SHORTCUT"));
                 flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_LOGIN_KEY, "TC_LABEL_NOTIFY_LOGIN"));
                 flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_ENEMY_NPC_KILL_KEY,
                         "TC_LABEL_NOTIFY_ENEMY_NPC_KILL"));
@@ -61,5 +63,14 @@ public class RewardsPlayerPluginSettings extends PlayerPluginSettings {
                 return element;
             }
         };
+    }
+
+    public static boolean shortcutVisible(Player player) {
+        return Rewards.playerSettings == null
+                || Rewards.playerSettings.getBoolean(player.getDbID(), shortcutKey()).orElse(true);
+    }
+
+    private static String shortcutKey() {
+        return PluginShortcutVisibility.playerSettingKey(Rewards.name);
     }
 }

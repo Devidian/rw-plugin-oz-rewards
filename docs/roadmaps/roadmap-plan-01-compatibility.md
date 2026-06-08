@@ -22,9 +22,14 @@ Supporting repositories:
 - A generic plugin-currency reward extension point is out of scope for Roadmap Plan 01.
 
 ## Work Packages
-- [ ] Package 1: Adopt shared settings reload/admin settings tab metadata if the portfolio-wide prework is applied to all plugins.
-- [ ] Package 2: Review GPS teleport-token kill rewards before implementation to confirm they should not move into Rewards.
-- [ ] Package 3: Verify Wallet API compatibility after Shop/Marketplace/GPS/LandClaim economy work changes currency usage patterns.
+- [x] Package 1: Adopt shared settings reload/admin settings tab metadata if the portfolio-wide prework is applied to all plugins.
+- [x] Package 2: Review GPS teleport-token kill rewards before implementation to confirm they should not move into Rewards.
+- [x] Package 3: Verify Wallet API compatibility after Shop/Marketplace/GPS/LandClaim economy work changes currency usage patterns.
+
+## Completion Notes
+- Rewards adopted shared admin settings metadata and current Tools runtime standards.
+- Generic enemy-NPC rewards, including bandit and skeleton matching, now belong to Rewards. A separate GPS-specific kill-reward implementation is superseded.
+- Wallet compatibility was validated during the completed cross-plugin Plan 03 and Plan 04 Maven validation.
 
 ## Risks
 - Rewards could become the natural owner for generalized kill rewards. GPS token rewards are currently scoped to GPS because they award a GPS-specific currency.

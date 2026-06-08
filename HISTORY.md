@@ -4,6 +4,11 @@
 
 ## [unreleased]
 
+## [0.3.0] - 2026-06-08 | Region-based discovery
+
+- feat: resolve sector discovery regions through Tools `RegionHelper`
+- feat: add player setting to hide the Rewards shortcut from `/ozt` and the inventory shortcut panel
+
 ## [0.2.0] - 2026-05-26 | Shared plugin status panel
 
 - feat: use the shared Tools info icon for the Rewards radial Info/Status entry

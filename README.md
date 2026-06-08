@@ -113,4 +113,6 @@ The lightning reward intentionally uses `PlayerDamageEvent.Cause.Environment` pl
 
 Orbit and hell rewards are checked when a player enters a new chunk and again on spawn. The configured thresholds use Rising World's vertical chunk coordinate (`Vector3i.y`), not raw altitude.
 
-Sector discovery rewards are checked on `PlayerEnterSectorEvent`. The plugin stores global first discoveries and per-player sector reward entries in its SQLite database. Region names are stored as `Unknown` until Rising World exposes a safe region lookup through the PluginAPI. Unreleased development databases with the old `biome` sector discovery column are recreated with the new `region` column on startup.
+Sector discovery rewards are checked on `PlayerEnterSectorEvent`. The plugin stores global first discoveries and per-player sector reward entries in its SQLite database. Region names are resolved through Tools `RegionHelper`; if the helper cannot resolve a stable region, `Unknown` is stored. Unreleased development databases with the old `biome` sector discovery column are recreated with the new `region` column on startup.
+
+Players can hide the Rewards shortcut from `/ozt` and the inventory shortcut panel in Rewards player settings.

@@ -27,6 +27,8 @@ import de.omegazirkel.risingworld.tools.ui.MenuItem;
 import de.omegazirkel.risingworld.tools.ui.PlayerPluginSettingsOverlay;
 import de.omegazirkel.risingworld.tools.ui.PluginInfoStatusProviders;
 import de.omegazirkel.risingworld.tools.ui.PluginMenuManager;
+import de.omegazirkel.risingworld.tools.ui.PluginShortcutVisibility;
+import de.omegazirkel.risingworld.tools.utils.RegionHelper;
 import net.risingworld.api.Plugin;
 import net.risingworld.api.Server;
 import net.risingworld.api.definitions.Npcs;
@@ -88,10 +90,11 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
         }
 
         gui = PluginGUI.getInstance(this);
-        PluginMenuManager.registerPluginMenu(new MenuItem(AssetManager.getIcon("icon-oz-rewards"), "Rewards", p -> {
+        PluginMenuManager.registerPluginMenu(new MenuItem(name, AssetManager.getIcon("icon-oz-rewards"), "Rewards", p -> {
             p.hideRadialMenu(true);
             gui.openMainMenu(p);
         }));
+        PluginShortcutVisibility.register(name, RewardsPlayerPluginSettings::shortcutVisible);
 
         Wallet.init(this);
         DiscordConnect.init(this);
@@ -108,6 +111,7 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
     @Override
     public void onDisable() {
         if (name != null) {
+            PluginShortcutVisibility.unregister(name);
             PluginInfoStatusProviders.unregisterProvider(name);
         }
         if (sqliteCon != null) {
@@ -427,7 +431,12 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
     }
 
     private String sectorRegion(Player player) {
-        return "Unknown";
+        try {
+            return RegionHelper.getRegionName(player);
+        } catch (RuntimeException ex) {
+            logger().warn("Could not resolve sector discovery region: " + ex.getMessage());
+            return "Unknown";
+        }
     }
 
     private String localizedRegion(Player player, String region) {
