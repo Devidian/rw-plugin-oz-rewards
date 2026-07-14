@@ -18,7 +18,7 @@ public class PluginGUI {
     }
 
     public static PluginGUI getInstance(Plugin p) {
-        AssetManager.loadIconFromPlugin(p, "icon-oz-rewards");
+        AssetManager.loadIconFromPlugin(p, "oz-rewards");
         return getInstance();
     }
 

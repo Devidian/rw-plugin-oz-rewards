@@ -90,7 +90,7 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
         }
 
         gui = PluginGUI.getInstance(this);
-        PluginMenuManager.registerPluginMenu(new MenuItem(name, "icon-oz-rewards", "Rewards", p -> {
+        PluginMenuManager.registerPluginMenu(new MenuItem(name, "oz-rewards", "Rewards", p -> {
             p.hideRadialMenu(true);
             gui.openMainMenu(p);
         }));

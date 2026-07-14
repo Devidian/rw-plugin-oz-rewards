@@ -2,7 +2,9 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
-## [unreleased]
+## [0.3.1] - 2026-07-14 | Icon set polish
+
+- change: rename the Rewards plugin icon key to its final semantic name
 
 ## [0.3.0] - 2026-06-08 | Region-based discovery
 

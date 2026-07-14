@@ -37,7 +37,7 @@ Supporting repository:
 The radial button can be removed without changing reward logic.
 
 ## Progress Notes
-- Phase 1 complete: Rewards now uses the Tools-provided `icon-ki-info-status` icon for the radial Info/Status action.
+- Phase 1 complete: Rewards now uses the Tools-provided `info-status` icon for the radial Info/Status action.
 - Phase 2 complete: the radial entry reuses the existing `/rewards status` behavior and shared Tools Info/Status provider.
 - Phase 3 complete: README/HISTORY were updated.
 - Validation passed with `mvn -B test` and `mvn -B -DskipTests package`.
