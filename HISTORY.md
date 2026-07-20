@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.4] - 2026-07-20 | Advanced button controls
+
+- change: update the shared OZ Tools UI dependency to the stable button controls
+
 ## [0.3.3] - 2026-07-20 | Decimal settings
 
 - feat: expose decimal reward values in the in-game admin settings
