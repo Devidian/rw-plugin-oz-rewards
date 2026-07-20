@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.2] - 2026-07-20 | Update metadata
+
+- change: publish the canonical GitHub release source for OZ Tools update management
+
 ## [0.3.1] - 2026-07-14 | Icon set polish
 
 - change: rename the Rewards plugin icon key to its final semantic name

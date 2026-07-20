@@ -1,9 +1,9 @@
 name: "OZ - Rewards"
 main: de.omegazirkel.risingworld.Rewards
-version: 0.3.1
+version: 0.3.2
 author: "Maik 'Devidian' Laschober"
 team: "Omega Zirkel"
 description: "Login, combat, and lightning wallet rewards"
 license: N/A
-website: N/A
+website: https://api.github.com/repos/Devidian/rw-plugin-oz-rewards/releases/latest
 loadorder: 0
