@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.3] - 2026-07-20 | Decimal settings
+
+- feat: expose decimal reward values in the in-game admin settings
+
 ## [0.3.2] - 2026-07-20 | Update metadata
 
 - change: publish the canonical GitHub release source for OZ Tools update management
