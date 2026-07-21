@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.5] - 2026-07-21 | Shared Tools update
+
+- change: update the shared OZ Tools dependency to version 0.23.1
+
 ## [0.3.4] - 2026-07-20 | Advanced button controls
 
 - change: update the shared OZ Tools UI dependency to the stable button controls
