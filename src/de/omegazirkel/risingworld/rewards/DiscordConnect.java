@@ -1,56 +1,34 @@
 package de.omegazirkel.risingworld.rewards;
 
-import java.lang.reflect.Method;
-
 import de.omegazirkel.risingworld.Rewards;
+import de.omegazirkel.risingworld.tools.bridge.DiscordBridge;
 import net.risingworld.api.Plugin;
 
-public final class DiscordConnect {
-    private static Plugin pluginRef = null;
+public final class DiscordConnect extends DiscordBridge {
+    private static DiscordConnect bridge;
 
-    private DiscordConnect() {
+    private DiscordConnect(Plugin owner) {
+        super(owner);
     }
 
     public static void init(Plugin plugin) {
-        pluginRef = plugin.getPluginByName("OZ - Discord Connect");
-        if (pluginRef != null) {
-            Rewards.logger().info(pluginRef.getName() + " found. ID: " + pluginRef.getID());
+        bridge = new DiscordConnect(plugin);
+        if (bridge.isAvailable()) {
+            Rewards.logger().info("OZ - Discord Connect found.");
         } else {
             Rewards.logger().info("OZ - Discord Connect not available. Discord reward delivery disabled.");
         }
     }
 
-    public static boolean isAvailable() {
-        try {
-            Class.forName("de.omegazirkel.risingworld.DiscordConnect");
-            return pluginRef != null;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
+    public static boolean isDiscordAvailable() {
+        return bridge != null && bridge.isAvailable();
     }
 
     public static String botLang() {
-        Object value = callPluginMethod("getBotLanguage", null, null);
-        return value instanceof String ? (String) value : "en";
+        return bridge == null ? "en" : bridge.getBotLanguage();
     }
 
     public static void sendDiscordMessage(String message, long channelId) {
-        callPluginMethod("sendDiscordMessageToTextChannel",
-                new Class<?>[] { String.class, long.class, byte[].class },
-                new Object[] { message, channelId, null });
-    }
-
-    private static Object callPluginMethod(String methodName, Class<?>[] paramTypes, Object[] args) {
-        if (!isAvailable()) {
-            return null;
-        }
-
-        try {
-            Method method = pluginRef.getClass().getMethod(methodName, paramTypes);
-            return method.invoke(pluginRef, args);
-        } catch (Exception e) {
-            Rewards.logger().warn("Error while calling DiscordConnect method " + methodName + ": " + e.getMessage());
-            return null;
-        }
+        if (bridge != null) bridge.sendTextMessage(message, channelId);
     }
 }

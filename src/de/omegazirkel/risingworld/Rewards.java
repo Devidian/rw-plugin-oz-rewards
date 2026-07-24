@@ -406,7 +406,8 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
             return false;
         }
 
-        Object result = Wallet.depositDefault(player.getDbID(), amount, reason, PLUGIN_IDENTIFIER);
+        de.omegazirkel.risingworld.tools.bridge.WalletBridge.WalletCallResult result = Wallet.depositDefault(
+                player.getDbID(), amount, reason, PLUGIN_IDENTIFIER);
         if (!Wallet.isSuccess(result)) {
             logger().warn("Reward deposit failed for player " + player.getDbID() + ": " + Wallet.message(result));
             return false;
@@ -522,7 +523,7 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
     }
 
     private void sendDiscord(String messageKey, Player player, long amount) {
-        if (s.discordRewardsChannelId == 0 || !DiscordConnect.isAvailable()) {
+        if (s.discordRewardsChannelId == 0 || !DiscordConnect.isDiscordAvailable()) {
             return;
         }
         String lang = DiscordConnect.botLang();
@@ -536,7 +537,7 @@ public class Rewards extends Plugin implements Listener, FileChangeListener {
     }
 
     private void sendSectorDiscoveryDiscord(Player player, long amount, int sectorX, int sectorY, String region) {
-        if (s.discordRewardsChannelId == 0 || !DiscordConnect.isAvailable()) {
+        if (s.discordRewardsChannelId == 0 || !DiscordConnect.isDiscordAvailable()) {
             return;
         }
         String lang = DiscordConnect.botLang();

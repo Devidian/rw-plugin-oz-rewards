@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## Unreleased
+
+- refactor: use the synchronized optional Discord bridge for configured bot-language messages
+
 ## [0.3.6] - 2026-07-24 | Ghoul rewards
 
 - change: treat ghouls as rewardable enemy NPCs by default

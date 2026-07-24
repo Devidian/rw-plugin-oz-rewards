@@ -34,7 +34,7 @@ public class RewardsPluginInfoStatusProvider implements PluginInfoStatusProvider
         PluginSettings settings = PluginSettings.getInstance();
         return t().get("TC_REWARDS_INFO_PANEL_STATUS", player)
                 .replace("PH_WALLET_STATUS", available(Wallet.isAvailable()))
-                .replace("PH_DISCORD_STATUS", available(DiscordConnect.isAvailable()))
+                .replace("PH_DISCORD_STATUS", available(DiscordConnect.isDiscordAvailable()))
                 .replace("PH_DAILY_LOGIN", String.valueOf(settings.dailyLoginEnabled))
                 .replace("PH_ENEMY_NPC", String.valueOf(settings.enemyNpcKillEnabled))
                 .replace("PH_AGGRESSIVE_ANIMAL", String.valueOf(settings.aggressiveAnimalKillEnabled))
