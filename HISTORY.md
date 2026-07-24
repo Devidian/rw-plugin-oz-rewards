@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.6] - 2026-07-24 | Ghoul rewards
+
+- change: treat ghouls as rewardable enemy NPCs by default
+
 ## [0.3.5] - 2026-07-21 | Shared Tools update
 
 - change: update the shared OZ Tools dependency to version 0.23.1
