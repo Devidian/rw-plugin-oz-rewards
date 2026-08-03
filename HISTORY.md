@@ -2,7 +2,9 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
-## Unreleased
+## [0.3.8] - 2026-08-03 | Localized reward announcements
+
+- fix: localize lightning and first sector-discovery announcements for every online recipient
 
 ## [0.3.7] - 2026-07-24 | Shared runtime bridges
 

@@ -54,7 +54,7 @@ Settings are copied from `settings.default.properties` to `settings.properties` 
 | `aggressiveAnimalKill.rewardOverrides` | empty | Comma-separated `definition=amount` overrides |
 | `lightning.enabled` | `true` | Enable storm environment-damage reward |
 | `lightning.reward` | `250` | Lightning workaround reward |
-| `lightning.messageType` | `yell` | `yell` or `chat` global announcement |
+| `lightning.messageType` | `yell` | `yell` or `chat` global announcement, localized for each recipient |
 | `orbit.enabled` | `true` | Enable first orbit visit reward |
 | `orbit.chunkY` | `64` | Vertical chunk threshold; rewards when player reaches this chunk or higher |
 | `orbit.reward` | `5000` | First orbit visit reward |
@@ -65,7 +65,7 @@ Settings are copied from `settings.default.properties` to `settings.properties` 
 | `sectorDiscovery.mode` | `firstOnly` | `firstOnly` rewards only the first player per sector; `perPlayer` rewards each player once per sector |
 | `sectorDiscovery.baseReward` | `50` | Base multiplier for sector distance reward |
 | `sectorDiscovery.firstDiscovererMultiplier` | `2.0` | Multiplier for the global first discoverer |
-| `sectorDiscovery.messageType` | `yell` | `yell` or `chat` global announcement for true first discoveries |
+| `sectorDiscovery.messageType` | `yell` | `yell` or `chat` announcement for true first discoveries, localized for each recipient |
 | `discordRewardsChannelId` | `0` | Discord text channel id, `0` disables messages |
 | `sendPluginWelcome` | `false` | Send welcome/help hint on spawn |
 | `logLevel` | `ALL` | Plugin log level |

@@ -212,13 +212,15 @@ class RewardsRuntime extends Plugin {
             return;
         }
 
-        String message = t.get("TC_MSG_LIGHTNING_REWARD", player)
-                .replace("PH_PLAYER", player.getName())
-                .replace("PH_AMOUNT", Long.toString(reward));
-        if ("chat".equalsIgnoreCase(s.lightningMessageType)) {
-            Server.broadcastTextMessage(message);
-        } else {
-            Server.broadcastYellMessage(message, 5, true);
+        for (Player recipient : Server.getAllPlayers()) {
+            String message = t.get("TC_MSG_LIGHTNING_REWARD", recipient)
+                    .replace("PH_PLAYER", player.getName())
+                    .replace("PH_AMOUNT", Long.toString(reward));
+            if ("chat".equalsIgnoreCase(s.lightningMessageType)) {
+                recipient.sendTextMessage(message);
+            } else {
+                recipient.sendYellMessage(message, 5, true);
+            }
         }
         sendDiscord("TC_DISCORD_LIGHTNING_REWARD", player, reward);
     }
@@ -340,16 +342,18 @@ class RewardsRuntime extends Plugin {
         }
 
         if (firstDiscoverer) {
-            String message = t.get("TC_MSG_SECTOR_FIRST_DISCOVERY", player)
-                    .replace("PH_PLAYER", player.getName())
-                    .replace("PH_AMOUNT", Long.toString(reward))
-                    .replace("PH_SECTOR_X", Integer.toString(sectorX))
-                    .replace("PH_SECTOR_Y", Integer.toString(sectorY))
-                    .replace("PH_REGION", localizedRegion(player, region));
-            if ("chat".equalsIgnoreCase(s.sectorDiscoveryMessageType)) {
-                Server.broadcastTextMessage(message);
-            } else {
-                Server.broadcastYellMessage(message, 5, true);
+            for (Player recipient : Server.getAllPlayers()) {
+                String message = t.get("TC_MSG_SECTOR_FIRST_DISCOVERY", recipient)
+                        .replace("PH_PLAYER", player.getName())
+                        .replace("PH_AMOUNT", Long.toString(reward))
+                        .replace("PH_SECTOR_X", Integer.toString(sectorX))
+                        .replace("PH_SECTOR_Y", Integer.toString(sectorY))
+                        .replace("PH_REGION", localizedRegion(recipient, region));
+                if ("chat".equalsIgnoreCase(s.sectorDiscoveryMessageType)) {
+                    recipient.sendTextMessage(message);
+                } else {
+                    recipient.sendYellMessage(message, 5, true);
+                }
             }
             sendSectorDiscoveryDiscord(player, reward, sectorX, sectorY, region);
             return;
