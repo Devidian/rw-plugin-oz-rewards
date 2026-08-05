@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.9] - 2026-08-05 | CI maintenance
+
+- build: maintain the GitHub Actions release workflow.
+
 ## [0.3.8] - 2026-08-03 | Localized reward announcements
 
 - fix: localize lightning and first sector-discovery announcements for every online recipient
