@@ -9,10 +9,11 @@ import net.risingworld.api.events.EventMethod;
 import net.risingworld.api.events.Listener;
 import net.risingworld.api.events.npc.NpcDeathEvent;
 import net.risingworld.api.events.player.PlayerCommandEvent;
-import net.risingworld.api.events.player.PlayerDamageEvent;
+import net.risingworld.api.events.player.PlayerEnterBiomeEvent;
 import net.risingworld.api.events.player.PlayerEnterChunkEvent;
 import net.risingworld.api.events.player.PlayerEnterSectorEvent;
 import net.risingworld.api.events.player.PlayerSpawnEvent;
+import net.risingworld.api.events.world.LightningStrikeEvent;
 
 /** Rising World entry point; reward workflows live in {@link RewardsRuntime}. */
 public final class Rewards extends RewardsRuntime implements Listener, FileChangeListener {
@@ -59,9 +60,12 @@ public final class Rewards extends RewardsRuntime implements Listener, FileChang
     @Override @EventMethod
     public void onPlayerEnterSector(PlayerEnterSectorEvent event) { super.onPlayerEnterSector(event); }
 
+    @EventMethod
+    public void onPlayerEnterBiome(PlayerEnterBiomeEvent event) { super.onPlayerEnterBiome(event); }
+
     @Override @EventMethod
     public void onNpcDeath(NpcDeathEvent event) { super.onNpcDeath(event); }
 
     @Override @EventMethod
-    public void onPlayerDamage(PlayerDamageEvent event) { super.onPlayerDamage(event); }
+    public void onLightningStrike(LightningStrikeEvent event) { super.onLightningStrike(event); }
 }

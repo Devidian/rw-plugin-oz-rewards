@@ -1,0 +1,333 @@
+{
+  "tc": {
+    "btn": {
+      "off": "Aus",
+      "on": "An"
+    },
+    "cmd": {
+      "help": "Hilfe:\nVerfügbare Chat-Kommandos:\n\u003ccolor\u003dred\u003e/PH_PLUGIN_CMD status\u003c/color\u003e zeigt den Plugin Status\n\u003ccolor\u003dred\u003e/PH_PLUGIN_CMD open\u003c/color\u003e öffnet das Pluginmenü\n\u003ccolor\u003dred\u003e/PH_PLUGIN_CMD help\u003c/color\u003e zeigt diese Hilfe",
+      "status": "Plugin Status\n➡️ Version: PH_VERSION\n➡️ Wallet: PH_WALLET_STATUS\n➡️ Discord: PH_DISCORD_STATUS"
+    },
+    "data": {
+      "col": {
+        "description": "Beschreibung"
+      },
+      "hell": {
+        "reached": {
+          "at": "Zeitpunkt erster Höllen Besuch"
+        }
+      },
+      "login": {
+        "last": {
+          "gmt": {
+            "date": "Letztes tägliches Login Datum (GMT)"
+          }
+        },
+        "streak": {
+          "count": "Anzahl täglicher Login Serie"
+        }
+      },
+      "orbit": {
+        "reached": {
+          "at": "Zeitpunkt erster Orbit Besuch"
+        }
+      }
+    },
+    "discord": {
+      "animal": {
+        "reward": "PH_PLAYER hat PH_AMOUNT Münzen für ein getötetes aggressives Tier erhalten."
+      },
+      "enemy": {
+        "npc": {
+          "reward": "PH_PLAYER hat PH_AMOUNT Münzen für einen getöteten Gegner-NPC erhalten."
+        }
+      },
+      "hell": {
+        "reward": "PH_PLAYER hat PH_AMOUNT Münzen für den ersten Höllen Besuch erhalten."
+      },
+      "lightning": {
+        "reward": "PH_PLAYER hat PH_AMOUNT Münzen für einen überlebten Sturmblitz erhalten."
+      },
+      "login": {
+        "reward": "PH_PLAYER hat PH_AMOUNT Münzen für die tägliche Login Belohnung erhalten."
+      },
+      "orbit": {
+        "reward": "PH_PLAYER hat PH_AMOUNT Münzen für den ersten Orbit Besuch erhalten."
+      },
+      "sector": {
+        "first": {
+          "discovery": "PH_PLAYER hat Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION) zuerst entdeckt und PH_AMOUNT Münzen erhalten."
+        }
+      }
+    },
+    "err": {
+      "cmd": {
+        "unknown": "Unbekanntes Kommando. Tippe \u003ccolor\u003dred\u003e/PH_PLUGIN_CMD help\u003c/color\u003e für Hilfe."
+      }
+    },
+    "label": {
+      "debug": {
+        "enemy": {
+          "npc": {
+            "kill": "Admin Debug für NPC Kills ohne Belohnung"
+          }
+        }
+      },
+      "notify": {
+        "animal": {
+          "kill": "Nachrichten für aggressive Tier Belohnungen"
+        },
+        "enemy": {
+          "npc": {
+            "kill": "Nachrichten für Gegner-NPC Belohnungen"
+          }
+        },
+        "login": "Nachrichten für tägliche Login Belohnungen"
+      },
+      "rewards": {
+        "shortcut": "Rewards-Shortcut in /ozt und Inventar anzeigen"
+      }
+    },
+    "msg": {
+      "animal": {
+        "reward": "Belohnung für aggressives Tier: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen."
+      },
+      "enemy": {
+        "npc": {
+          "debug": {
+            "no": {
+              "reward": "Gegner-NPC Debug: keine Belohnung für NPC typeId\u003d\u003ccolor\u003dyellow\u003ePH_TYPE_ID\u003c/color\u003e, matchName\u003d\u003ccolor\u003dyellow\u003ePH_DEFINITION_NAME\u003c/color\u003e."
+            }
+          },
+          "reward": "Gegner-NPC Belohnung: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen."
+        }
+      },
+      "hell": {
+        "reward": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat zum ersten Mal die Hölle erreicht und \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen erhalten."
+      },
+      "lightning": {
+        "reward": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat einen Sturmblitz überlebt und \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen erhalten."
+      },
+      "login": {
+        "reward": "Tägliche Belohnung: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen. Login Serie: \u003ccolor\u003dyellow\u003ePH_STREAK\u003c/color\u003e."
+      },
+      "orbit": {
+        "reward": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat zum ersten Mal den Orbit erreicht und \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen erhalten."
+      },
+      "plugin": {
+        "welcome": "➡️ \u003ccolor\u003d#F00000\u003ePH_PLUGIN_NAME\u003c/color\u003e | \u003ccolor\u003d#F0F000\u003evPH_PLUGIN_VERSION\u003c/color\u003e | \u003ccolor\u003d#C0C0C0\u003e/PH_PLUGIN_CMD\u003c/color\u003e | geladen!"
+      },
+      "sector": {
+        "first": {
+          "discovery": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat als erstes Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) betreten und \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen erhalten."
+        },
+        "personal": {
+          "discovery": "Sektor-Erkundungsbelohnung: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen für Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e)."
+        }
+      }
+    },
+    "reason": {
+      "animal": {
+        "kill": "Belohnung für aggressives Tier"
+      },
+      "daily": {
+        "login": {
+          "$value": "Tägliche Login Belohnung",
+          "streak": "Tägliche Login Belohnung in Serie (PH_STREAK)"
+        }
+      },
+      "enemy": {
+        "npc": {
+          "kill": "Gegner-NPC Belohnung"
+        }
+      },
+      "hell": "Belohnung für den ersten Höllen Besuch",
+      "lightning": "Blitz überlebensbelohnung",
+      "npc": {
+        "kill": "Belohnung für Tötung: PH_NPC_TYPE"
+      },
+      "orbit": "Belohnung für den ersten Orbit Besuch",
+      "sector": {
+        "discovery": {
+          "$value": "Belohnung für entdecken von Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION)",
+          "first": "Erstentdecker-Bonus für Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION)"
+        }
+      }
+    },
+    "region": {
+      "unknown": "Unbekannt"
+    },
+    "rewards": {
+      "info": {
+        "panel": {
+          "info": "\u003cb\u003ePH_PLUGIN_NAME\u003c/b\u003e\nVersion: PH_VERSION\nBefehl: /PH_PLUGIN_CMD\n\nRewards vergibt Wallet-basierte Belohnungen für Logins, Kills, Überlebensereignisse, Orbit-/Höllenbesuche und Sektorentdeckung.",
+          "status": "\u003cb\u003eRewards Status\u003c/b\u003e\nWallet: PH_WALLET_STATUS\nDiscord: PH_DISCORD_STATUS\nTäglicher Login: PH_DAILY_LOGIN\nFeindliche NPCs: PH_ENEMY_NPC\nAggressive Tiere: PH_AGGRESSIVE_ANIMAL\nBlitz: PH_LIGHTNING\nOrbit: PH_ORBIT\nHölle: PH_HELL\nSektorentdeckung: PH_SECTOR_DISCOVERY"
+        }
+      }
+    },
+    "setting": {
+      "aggressiveanimalkill": {
+        "enabled": {
+          "desc": "Aktiviert Belohnungen für Kills aggressiver Tiere.",
+          "label": "Belohnungen für aggressive Tiere"
+        },
+        "rewardoverrides": {
+          "desc": "Kommagetrennte Tier-Belohnungsüberschreibungen, z. B. wolf\u003d15.",
+          "label": "Tier-Belohnungsüberschreibungen"
+        },
+        "reward": {
+          "desc": "Standardbelohnung für Kills aggressiver Tiere.",
+          "label": "Belohnung für aggressive Tiere"
+        }
+      },
+      "animals": {
+        "desc": "Belohnungseinstellungen für Kills aggressiver Tiere.",
+        "label": "Aggressive Tiere"
+      },
+      "dailylogin": {
+        "basebonus": {
+          "desc": "Basisbetrag für tägliche Login-Belohnungen.",
+          "label": "Täglicher Login-Basisbetrag"
+        },
+        "desc": "Belohnungsformel für tägliche Logins.",
+        "enabled": {
+          "desc": "Aktiviert Belohnungen für tägliche Logins.",
+          "label": "Täglicher Login"
+        },
+        "factor": {
+          "desc": "Dezimaler Serienmultiplikator für tägliche Login-Belohnungen.",
+          "label": "Täglicher Login-Faktor"
+        },
+        "label": "Täglicher Login",
+        "streaklimit": {
+          "desc": "Maximaler Exponent der täglichen Login-Serienformel.",
+          "label": "Limit für tägliche Login-Serie"
+        }
+      },
+      "discordrewardschannelid": {
+        "desc": "Discord-Kanal-ID für Belohnungsankündigungen; 0 deaktiviert Discord-Belohnungsmeldungen.",
+        "label": "Discord-Belohnungskanal"
+      },
+      "discord": {
+        "desc": "Optionale Discord-Belohnungsankündigungen.",
+        "label": "Discord-Ankündigungen"
+      },
+      "enemynpckill": {
+        "definitionnames": {
+          "desc": "Kommagetrennte Definitionsnamen-Fragmente, die als belohnbare Gegner gelten.",
+          "label": "Definitionen feindlicher NPCs"
+        },
+        "enabled": {
+          "desc": "Aktiviert Belohnungen für feindliche NPC-Kills.",
+          "label": "Belohnungen für feindliche NPCs"
+        },
+        "rewardoverrides": {
+          "desc": "Kommagetrennte Belohnungsüberschreibungen für Definitionen, z. B. skeleton\u003d5.",
+          "label": "Belohnungsüberschreibungen für feindliche NPCs"
+        },
+        "reward": {
+          "desc": "Standardbelohnung für erkannte feindliche NPC-Kills.",
+          "label": "Belohnung für feindliche NPCs"
+        },
+        "typeids": {
+          "desc": "Kommagetrennte NPC-Typ-IDs, die als belohnbare Gegner gelten.",
+          "label": "Typ-IDs feindlicher NPCs"
+        }
+      },
+      "enemynpc": {
+        "desc": "Erkennung und Auszahlung von Belohnungen für feindliche NPC-Kills.",
+        "label": "Feindliche NPC-Kills"
+      },
+      "general": {
+        "desc": "Protokollierung, Reload und Willkommensverhalten.",
+        "label": "Allgemein"
+      },
+      "hell": {
+        "chunky": {
+          "desc": "Maximaler vertikaler Chunk für die Höllen-Belohnung.",
+          "label": "Höllen-Chunk-Y"
+        },
+        "enabled": {
+          "desc": "Aktiviert die Belohnung für den ersten Höllenbesuch.",
+          "label": "Höllen-Belohnung"
+        },
+        "reward": {
+          "desc": "Belohnung für den ersten Höllenbesuch.",
+          "label": "Höllen-Belohnungsbetrag"
+        }
+      },
+      "lightning": {
+        "enabled": {
+          "desc": "Aktiviert Blitz-/Sturm-Belohnungen.",
+          "label": "Blitz-Belohnungen"
+        },
+        "messagetype": {
+          "desc": "Ankündigungsmodus für Blitz-Belohnungen: yell oder chat.",
+          "label": "Blitz-Nachrichtentyp"
+        },
+        "reward": {
+          "desc": "Belohnung, die nach Auslösen des Blitz-Workarounds ausgezahlt wird.",
+          "label": "Blitz-Belohnung"
+        }
+      },
+      "loglevel": {
+        "desc": "Steuert den Detailgrad der Rewards-Protokollierung.",
+        "label": "Log-Level"
+      },
+      "orbit": {
+        "chunky": {
+          "desc": "Minimaler vertikaler Chunk für die Orbit-Belohnung.",
+          "label": "Orbit-Chunk-Y"
+        },
+        "enabled": {
+          "desc": "Aktiviert die Belohnung für den ersten Orbit-Besuch.",
+          "label": "Orbit-Belohnung"
+        },
+        "reward": {
+          "desc": "Belohnung für den ersten Orbit-Besuch.",
+          "label": "Orbit-Belohnungsbetrag"
+        }
+      },
+      "reloadonchange": {
+        "desc": "Dokumentiert, dass Rewards-Einstellungen neu geladen werden, wenn sich settings.properties ändert.",
+        "label": "Bei Änderung neu laden"
+      },
+      "sectordiscovery": {
+        "basereward": {
+          "desc": "Basisbelohnung multipliziert mit der Sektorentfernung.",
+          "label": "Sektor-Basisbelohnung"
+        },
+        "desc": "Belohnungsformel und Ankündigungsverhalten für Sektorentdeckungen.",
+        "enabled": {
+          "desc": "Aktiviert Sektorentdeckungs-Belohnungen.",
+          "label": "Sektorentdeckungs-Belohnungen"
+        },
+        "firstdiscoverermultiplier": {
+          "desc": "Dezimaler Multiplikator für den globalen Erstentdecker.",
+          "label": "Erstentdecker-Multiplikator"
+        },
+        "label": "Sektorentdeckung",
+        "messagetype": {
+          "desc": "Ankündigungsmodus für Erstentdeckungen: yell oder chat.",
+          "label": "Sektor-Nachrichtentyp"
+        },
+        "mode": {
+          "desc": "Belohnungsmodus: firstOnly oder perPlayer.",
+          "label": "Sektorentdeckungsmodus"
+        }
+      },
+      "sendpluginwelcome": {
+        "desc": "Zeigt eine kurze Rewards-Nachricht, wenn ein Spieler beitritt.",
+        "label": "Willkommensnachricht"
+      },
+      "survival": {
+        "desc": "Belohnungseinstellungen für Blitz, Orbit und Höllenbesuch.",
+        "label": "Überlebens-Meilensteine"
+      }
+    },
+    "status": {
+      "available": "verfügbar",
+      "missing": "fehlt"
+    }
+  }
+}

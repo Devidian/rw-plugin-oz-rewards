@@ -36,7 +36,7 @@ public class RewardsPlayerPluginData extends PlayerPluginData {
 
                 TableScrollView table = new TableScrollView(
                         Arrays.asList(
-                                t().get("TC_DATA_COL_DESCRIPTION", uiPlayer),
+                                t().get("tc.data.col.description", uiPlayer),
                                 "key",
                                 "value"),
                         Arrays.asList(38f, 42f, 20f));
@@ -45,24 +45,24 @@ public class RewardsPlayerPluginData extends PlayerPluginData {
                 table.setScrollBodyHeight(320);
 
                 int playerDbId = uiPlayer.getDbID();
-                addRow(table, t().get("TC_DATA_LOGIN_LAST_GMT_DATE", uiPlayer), Rewards.LOGIN_LAST_GMT_DATE_KEY,
+                addRow(table, t().get("tc.data.login.last.gmt.date", uiPlayer), Rewards.LOGIN_LAST_GMT_DATE_KEY,
                         stringValue(playerDbId, Rewards.LOGIN_LAST_GMT_DATE_KEY));
-                addRow(table, t().get("TC_DATA_LOGIN_STREAK_COUNT", uiPlayer), Rewards.LOGIN_STREAK_COUNT_KEY,
+                addRow(table, t().get("tc.data.login.streak.count", uiPlayer), Rewards.LOGIN_STREAK_COUNT_KEY,
                         intValue(playerDbId, Rewards.LOGIN_STREAK_COUNT_KEY));
-                addRow(table, t().get("TC_DATA_ORBIT_REACHED_AT", uiPlayer), Rewards.ORBIT_REACHED_AT_KEY,
+                addRow(table, t().get("tc.data.orbit.reached.at", uiPlayer), Rewards.ORBIT_REACHED_AT_KEY,
                         stringValue(playerDbId, Rewards.ORBIT_REACHED_AT_KEY));
-                addRow(table, t().get("TC_DATA_HELL_REACHED_AT", uiPlayer), Rewards.HELL_REACHED_AT_KEY,
+                addRow(table, t().get("tc.data.hell.reached.at", uiPlayer), Rewards.HELL_REACHED_AT_KEY,
                         stringValue(playerDbId, Rewards.HELL_REACHED_AT_KEY));
-                addRow(table, t().get("TC_LABEL_NOTIFY_LOGIN", uiPlayer), RewardsPlayerPluginSettings.NOTIFY_LOGIN_KEY,
+                addRow(table, t().get("tc.label.notify.login", uiPlayer), RewardsPlayerPluginSettings.NOTIFY_LOGIN_KEY,
                         booleanValue(playerDbId, RewardsPlayerPluginSettings.NOTIFY_LOGIN_KEY, true));
-                addRow(table, t().get("TC_LABEL_NOTIFY_ENEMY_NPC_KILL", uiPlayer),
+                addRow(table, t().get("tc.label.notify.enemy.npc.kill", uiPlayer),
                         RewardsPlayerPluginSettings.NOTIFY_ENEMY_NPC_KILL_KEY,
                         booleanValue(playerDbId, RewardsPlayerPluginSettings.NOTIFY_ENEMY_NPC_KILL_KEY, true));
-                addRow(table, t().get("TC_LABEL_NOTIFY_ANIMAL_KILL", uiPlayer),
+                addRow(table, t().get("tc.label.notify.animal.kill", uiPlayer),
                         RewardsPlayerPluginSettings.NOTIFY_ANIMAL_KILL_KEY,
                         booleanValue(playerDbId, RewardsPlayerPluginSettings.NOTIFY_ANIMAL_KILL_KEY, true));
                 if (uiPlayer.isAdmin()) {
-                    addRow(table, t().get("TC_LABEL_DEBUG_ENEMY_NPC_KILL", uiPlayer),
+                    addRow(table, t().get("tc.label.debug.enemy.npc.kill", uiPlayer),
                             RewardsPlayerPluginSettings.DEBUG_ENEMY_NPC_KILL_KEY,
                             booleanValue(playerDbId, RewardsPlayerPluginSettings.DEBUG_ENEMY_NPC_KILL_KEY, false));
                 }

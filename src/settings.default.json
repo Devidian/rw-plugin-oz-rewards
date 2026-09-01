@@ -1,0 +1,44 @@
+{
+  "aggressiveAnimalKill": {
+    "enabled": "true",
+    "reward": "5",
+    "rewardOverrides": ""
+  },
+  "dailyLogin": {
+    "baseBonus": "10",
+    "enabled": "true",
+    "factor": "1.10",
+    "streakLimit": "7"
+  },
+  "discordRewardsChannelId": "0",
+  "enemyNpcKill": {
+    "definitionNames": "bandit,skeleton,ghoul",
+    "enabled": "true",
+    "reward": "10",
+    "rewardOverrides": "",
+    "typeIds": "210,215"
+  },
+  "hell": {
+    "chunkY": "-10",
+    "enabled": "true",
+    "reward": "500"
+  },
+  "lightning": {
+    "enabled": "true",
+    "messageType": "yell",
+    "reward": "2500"
+  },
+  "orbit": {
+    "chunkY": "64",
+    "enabled": "true",
+    "reward": "5000"
+  },
+  "sectorDiscovery": {
+    "baseReward": "50",
+    "enabled": "true",
+    "firstDiscovererMultiplier": "2.0",
+    "messageType": "yell",
+    "mode": "perPlayer"
+  },
+  "sendPluginWelcome": "false"
+}

@@ -29,14 +29,14 @@ public class RewardsPlayerPluginSettings extends PlayerPluginSettings {
             @Override
             protected void redrawContent() {
                 flexWrapper.removeAllChilds();
-                flexWrapper.addChild(booleanSetting(uiPlayer, shortcutKey(), "TC_LABEL_REWARDS_SHORTCUT"));
-                flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_LOGIN_KEY, "TC_LABEL_NOTIFY_LOGIN"));
+                flexWrapper.addChild(booleanSetting(uiPlayer, shortcutKey(), "tc.label.rewards.shortcut"));
+                flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_LOGIN_KEY, "tc.label.notify.login"));
                 flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_ENEMY_NPC_KILL_KEY,
-                        "TC_LABEL_NOTIFY_ENEMY_NPC_KILL"));
-                flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_ANIMAL_KILL_KEY, "TC_LABEL_NOTIFY_ANIMAL_KILL"));
+                        "tc.label.notify.enemy.npc.kill"));
+                flexWrapper.addChild(booleanSetting(uiPlayer, NOTIFY_ANIMAL_KILL_KEY, "tc.label.notify.animal.kill"));
                 if (uiPlayer.isAdmin()) {
                     flexWrapper.addChild(booleanSetting(uiPlayer, DEBUG_ENEMY_NPC_KILL_KEY,
-                            "TC_LABEL_DEBUG_ENEMY_NPC_KILL", false));
+                            "tc.label.debug.enemy.npc.kill", false));
                 }
             }
 
@@ -59,7 +59,7 @@ public class RewardsPlayerPluginSettings extends PlayerPluginSettings {
                         Rewards.playerSettings.setBoolean(uiPlayer.getDbID(), key, nextValue);
                     }
                     redrawContent();
-                }, t().get("TC_BTN_OFF", uiPlayer), t().get("TC_BTN_ON", uiPlayer)));
+                }, t().get("tc.btn.off", uiPlayer), t().get("tc.btn.on", uiPlayer)));
                 return element;
             }
         };

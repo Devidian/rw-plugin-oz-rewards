@@ -12,12 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.logging.log4j.Level;
-
 import de.omegazirkel.risingworld.Rewards;
 import de.omegazirkel.risingworld.tools.OZLogger;
 import de.omegazirkel.risingworld.tools.settings.AdminSettingsEntry;
 import de.omegazirkel.risingworld.tools.settings.AdminSettingsType;
+import de.omegazirkel.risingworld.tools.settings.JsonSettingsFile;
 import de.omegazirkel.risingworld.tools.settings.SettingsFileEditor;
 
 public class PluginSettings {
@@ -52,8 +51,6 @@ public class PluginSettings {
     public String sectorDiscoveryMessageType = "yell";
     public long discordRewardsChannelId = 0;
     public boolean sendPluginWelcome = false;
-    public String logLevel = Level.ALL.name();
-    public boolean reloadOnChange = true;
 
     private static OZLogger logger() {
         return Rewards.logger();
@@ -75,25 +72,21 @@ public class PluginSettings {
     }
 
     public void initSettings() {
-        initSettings((plugin.getPath() != null ? plugin.getPath() : ".") + "/settings.properties");
+        initSettings(JsonSettingsFile.worldSettingsFile(plugin.getPath() != null ? plugin.getPath() : ".").toString());
     }
 
     public void initSettings(String filePath) {
         Path settingsFile = Paths.get(filePath);
-        Path defaultSettingsFile = settingsFile.resolveSibling("settings.default.properties");
+        Path defaultSettingsFile = settingsFile.resolveSibling("settings.default.json");
+        Path legacySettingsFile = settingsFile.resolveSibling("settings.properties");
 
         try {
-            if (Files.notExists(settingsFile) && Files.exists(defaultSettingsFile)) {
-                logger().info("settings.properties not found, copying from settings.default.properties...");
-                Files.copy(defaultSettingsFile, settingsFile);
-            }
-
-            Properties settings = new Properties();
-            if (Files.exists(settingsFile)) {
-                try (FileInputStream in = new FileInputStream(settingsFile.toFile())) {
-                    settings.load(new InputStreamReader(in, "UTF8"));
-                }
-            } else {
+            if (JsonSettingsFile.migrateLegacyProperties(legacySettingsFile, settingsFile))
+                logger().info("Migrated legacy settings.properties to " + settingsFile.getFileName());
+            if (Files.notExists(settingsFile) && Files.exists(defaultSettingsFile))
+                JsonSettingsFile.writeFlatAtomically(settingsFile, JsonSettingsFile.loadFlat(defaultSettingsFile));
+            Properties settings = loadSettings(settingsFile);
+            if (settings.isEmpty()) {
                 logger().warn("Neither settings.properties nor settings.default.properties found. Using defaults.");
             }
 
@@ -129,12 +122,7 @@ public class PluginSettings {
                     .trim();
             discordRewardsChannelId = lng(settings, "discordRewardsChannelId", discordRewardsChannelId);
             sendPluginWelcome = bool(settings, "sendPluginWelcome", sendPluginWelcome);
-            logLevel = settings.getProperty("logLevel", "ALL");
-            reloadOnChange = bool(settings, "reloadOnChange", reloadOnChange);
-
             logger().info(plugin.getName() + " Plugin settings loaded");
-            logger().info("Loglevel is set to " + logLevel);
-            logger().setLevel(logLevel);
         } catch (IOException ex) {
             logger().error("IOException on initSettings: " + ex.getMessage());
             ex.printStackTrace();
@@ -143,12 +131,7 @@ public class PluginSettings {
 
     public List<AdminSettingsEntry> adminSettingsEntries() {
         return List.of(
-                AdminSettingsEntry.group("general", "General", "Logging, reload, and welcome behavior."),
-                entry("logLevel", "Log level", "Controls Rewards logging verbosity.", logLevel, "ALL",
-                        AdminSettingsType.STRING),
-                entry("reloadOnChange", "Reload on change",
-                        "Documents that Rewards settings reload when settings.properties changes.", reloadOnChange,
-                        "true", AdminSettingsType.BOOLEAN),
+                AdminSettingsEntry.group("general", "General", "Welcome behavior."),
                 entry("sendPluginWelcome", "Welcome message", "Shows a short Rewards message when a player joins.",
                         sendPluginWelcome, "false", AdminSettingsType.BOOLEAN),
                 AdminSettingsEntry.group("dailyLogin", "Daily login", "Daily login reward formula."),
@@ -257,7 +240,16 @@ public class PluginSettings {
     }
 
     private Path settingsPath() {
-        return Paths.get((plugin.getPath() != null ? plugin.getPath() : ".") + "/settings.properties");
+        return JsonSettingsFile.worldSettingsFile(plugin.getPath() != null ? plugin.getPath() : ".");
+    }
+
+    private Properties loadSettings(Path file) throws IOException {
+        if (!file.getFileName().toString().endsWith(".properties")) return JsonSettingsFile.loadProperties(file);
+        Properties properties = new Properties();
+        if (Files.exists(file)) try (FileInputStream input = new FileInputStream(file.toFile())) {
+            properties.load(new InputStreamReader(input, "UTF8"));
+        }
+        return properties;
     }
 
     private String joinIntegers(List<Integer> values) {

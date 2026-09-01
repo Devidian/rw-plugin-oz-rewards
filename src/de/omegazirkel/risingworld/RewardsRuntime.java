@@ -27,18 +27,18 @@ import de.omegazirkel.risingworld.tools.ui.PlayerPluginSettingsOverlay;
 import de.omegazirkel.risingworld.tools.ui.PluginInfoStatusProviders;
 import de.omegazirkel.risingworld.tools.ui.PluginMenuManager;
 import de.omegazirkel.risingworld.tools.ui.PluginShortcutVisibility;
-import de.omegazirkel.risingworld.tools.utils.RegionHelper;
 import net.risingworld.api.Plugin;
 import net.risingworld.api.Server;
+import net.risingworld.api.World;
 import net.risingworld.api.definitions.Npcs;
 import net.risingworld.api.definitions.Npcs.Behaviour;
-import net.risingworld.api.definitions.WeatherDefs;
 import net.risingworld.api.events.npc.NpcDeathEvent;
 import net.risingworld.api.events.player.PlayerCommandEvent;
-import net.risingworld.api.events.player.PlayerDamageEvent;
+import net.risingworld.api.events.player.PlayerEnterBiomeEvent;
 import net.risingworld.api.events.player.PlayerEnterChunkEvent;
 import net.risingworld.api.events.player.PlayerEnterSectorEvent;
 import net.risingworld.api.events.player.PlayerSpawnEvent;
+import net.risingworld.api.events.world.LightningStrikeEvent;
 import net.risingworld.api.objects.Npc;
 import net.risingworld.api.objects.Player;
 import net.risingworld.api.utils.Vector2i;
@@ -121,7 +121,6 @@ class RewardsRuntime extends Plugin {
 
     public void onSettingsChanged(Path settingsPath) {
         s.initSettings(settingsPath.toString());
-        logger().setLevel(s.logLevel);
     }
 
     public void onPlayerCommand(PlayerCommandEvent event) {
@@ -141,10 +140,10 @@ class RewardsRuntime extends Plugin {
                 PluginInfoStatusProviders.show(player, name);
                 break;
             case "help":
-                player.sendTextMessage(t.get("TC_CMD_HELP", player).replace("PH_PLUGIN_CMD", COMMAND));
+                player.sendTextMessage(t.get("tc.cmd.help", player).replace("PH_PLUGIN_CMD", COMMAND));
                 break;
             default:
-                player.sendTextMessage(t.get("TC_ERR_CMD_UNKNOWN", player).replace("PH_PLUGIN_CMD", COMMAND));
+                player.sendTextMessage(t.get("tc.err.cmd.unknown", player).replace("PH_PLUGIN_CMD", COMMAND));
                 break;
         }
     }
@@ -152,7 +151,7 @@ class RewardsRuntime extends Plugin {
     public void onPlayerSpawnEvent(PlayerSpawnEvent event) {
         Player player = event.getPlayer();
         if (s.sendPluginWelcome) {
-            player.sendTextMessage(t.get("TC_MSG_PLUGIN_WELCOME", player)
+            player.sendTextMessage(t.get("tc.msg.plugin.welcome", player)
                     .replace("PH_PLUGIN_NAME", getDescription("name"))
                     .replace("PH_PLUGIN_CMD", COMMAND)
                     .replace("PH_PLUGIN_VERSION", getDescription("version")));
@@ -169,6 +168,11 @@ class RewardsRuntime extends Plugin {
         grantSectorDiscoveryReward(event.getPlayer(), event.getNewSectorCoordinates());
     }
 
+    public void onPlayerEnterBiome(PlayerEnterBiomeEvent event) {
+        Player player = event.getPlayer();
+        grantSectorDiscoveryReward(player, player.getSectorPosition());
+    }
+
     public void onNpcDeath(NpcDeathEvent event) {
         if (event.getCause() != NpcDeathEvent.Cause.KilledByPlayer || !(event.getKiller() instanceof Player player)) {
             return;
@@ -182,15 +186,15 @@ class RewardsRuntime extends Plugin {
         String definitionName = npc.getDefinition().name == null ? "" : npc.getDefinition().name;
         if (s.enemyNpcKillEnabled && isEnemyNpc(npc, definitionName)) {
             long reward = s.rewardForDefinition(definitionName, s.enemyNpcKillReward, s.enemyNpcKillRewardOverrides);
-            grantNpcReward(player, npc, definitionName, reward, "TC_MSG_ENEMY_NPC_REWARD",
-                    "TC_DISCORD_ENEMY_NPC_REWARD", RewardsPlayerPluginSettings.NOTIFY_ENEMY_NPC_KILL_KEY);
+            grantNpcReward(player, npc, definitionName, reward, "tc.msg.enemy.npc.reward",
+                    "tc.discord.enemy.npc.reward", RewardsPlayerPluginSettings.NOTIFY_ENEMY_NPC_KILL_KEY);
             return;
         }
 
         if (s.aggressiveAnimalKillEnabled && isRewardableAnimal(npc)) {
             long reward = s.rewardForDefinition(definitionName, s.aggressiveAnimalKillReward,
                     s.aggressiveAnimalKillRewardOverrides);
-            grantNpcReward(player, npc, definitionName, reward, "TC_MSG_ANIMAL_REWARD", "TC_DISCORD_ANIMAL_REWARD",
+            grantNpcReward(player, npc, definitionName, reward, "tc.msg.animal.reward", "tc.discord.animal.reward",
                     RewardsPlayerPluginSettings.NOTIFY_ANIMAL_KILL_KEY);
             return;
         }
@@ -198,22 +202,17 @@ class RewardsRuntime extends Plugin {
         sendUnrewardedNpcDebugMessage(player, npc, definitionName);
     }
 
-    public void onPlayerDamage(PlayerDamageEvent event) {
-        if (!s.lightningEnabled || event.getCause() != PlayerDamageEvent.Cause.Environment
-                || !isLightningRewardWeather()) {
+    public void onLightningStrike(LightningStrikeEvent event) {
+        if (!s.lightningEnabled || !(event.getTarget() instanceof Player player)) {
             return;
         }
-
-        // Rising World currently exposes lightning-like damage only as generic environment damage.
-        // Keep this weather gate until a dedicated lightning event or cause is available.
-        Player player = event.getPlayer();
         long reward = s.lightningReward;
-        if (!depositReward(player, reward, t.get("TC_REASON_LIGHTNING", player))) {
+        if (!depositReward(player, reward, t.get("tc.reason.lightning", player))) {
             return;
         }
 
         for (Player recipient : Server.getAllPlayers()) {
-            String message = t.get("TC_MSG_LIGHTNING_REWARD", recipient)
+            String message = t.get("tc.msg.lightning.reward", recipient)
                     .replace("PH_PLAYER", player.getName())
                     .replace("PH_AMOUNT", Long.toString(reward));
             if ("chat".equalsIgnoreCase(s.lightningMessageType)) {
@@ -222,7 +221,7 @@ class RewardsRuntime extends Plugin {
                 recipient.sendYellMessage(message, 5, true);
             }
         }
-        sendDiscord("TC_DISCORD_LIGHTNING_REWARD", player, reward);
+        sendDiscord("tc.discord.lightning.reward", player, reward);
     }
 
     private void grantDailyLoginReward(Player player) {
@@ -258,16 +257,16 @@ class RewardsRuntime extends Plugin {
         playerSettings.setInt(playerDbId, LOGIN_STREAK_COUNT_KEY, nextStreak);
 
         if (isPlayerNotificationEnabled(player, RewardsPlayerPluginSettings.NOTIFY_LOGIN_KEY)) {
-            player.sendTextMessage(t.get("TC_MSG_LOGIN_REWARD", player)
+            player.sendTextMessage(t.get("tc.msg.login.reward", player)
                     .replace("PH_AMOUNT", Long.toString(reward))
                     .replace("PH_STREAK", Integer.toString(nextStreak)));
         }
-        sendDiscord("TC_DISCORD_LOGIN_REWARD", player, reward);
+        sendDiscord("tc.discord.login.reward", player, reward);
     }
 
     private void grantNpcReward(Player player, Npc npc, String definitionName, long reward, String playerMessageKey,
             String discordMessageKey, String notificationKey) {
-        String reason = t.get("TC_REASON_NPC_KILL", player)
+        String reason = t.get("tc.reason.npc.kill", player)
                 .replace("PH_NPC_TYPE", npcTypeName(npc, definitionName));
         if (!depositReward(player, reward, reason)) {
             return;
@@ -285,9 +284,9 @@ class RewardsRuntime extends Plugin {
         }
 
         grantLocationMilestoneReward(player, chunkPosition.y, s.orbitEnabled, true, s.orbitChunkY, s.orbitReward,
-                ORBIT_REACHED_AT_KEY, "TC_REASON_ORBIT", "TC_MSG_ORBIT_REWARD", "TC_DISCORD_ORBIT_REWARD");
+                ORBIT_REACHED_AT_KEY, "tc.reason.orbit", "tc.msg.orbit.reward", "tc.discord.orbit.reward");
         grantLocationMilestoneReward(player, chunkPosition.y, s.hellEnabled, false, s.hellChunkY, s.hellReward,
-                HELL_REACHED_AT_KEY, "TC_REASON_HELL", "TC_MSG_HELL_REWARD", "TC_DISCORD_HELL_REWARD");
+                HELL_REACHED_AT_KEY, "tc.reason.hell", "tc.msg.hell.reward", "tc.discord.hell.reward");
     }
 
     private void grantLocationMilestoneReward(Player player, int chunkY, boolean enabled, boolean minimumThreshold,
@@ -343,7 +342,7 @@ class RewardsRuntime extends Plugin {
 
         if (firstDiscoverer) {
             for (Player recipient : Server.getAllPlayers()) {
-                String message = t.get("TC_MSG_SECTOR_FIRST_DISCOVERY", recipient)
+                String message = t.get("tc.msg.sector.first.discovery", recipient)
                         .replace("PH_PLAYER", player.getName())
                         .replace("PH_AMOUNT", Long.toString(reward))
                         .replace("PH_SECTOR_X", Integer.toString(sectorX))
@@ -359,7 +358,7 @@ class RewardsRuntime extends Plugin {
             return;
         }
 
-        player.sendTextMessage(t.get("TC_MSG_SECTOR_PERSONAL_DISCOVERY", player)
+        player.sendTextMessage(t.get("tc.msg.sector.personal.discovery", player)
                 .replace("PH_AMOUNT", Long.toString(reward))
                 .replace("PH_SECTOR_X", Integer.toString(sectorX))
                 .replace("PH_SECTOR_Y", Integer.toString(sectorY))
@@ -410,14 +409,14 @@ class RewardsRuntime extends Plugin {
 
     private String dailyLoginWalletReason(Player player, int streakCount) {
         if (streakCount <= 1) {
-            return t.get("TC_REASON_DAILY_LOGIN", player);
+            return t.get("tc.reason.daily.login", player);
         }
-        return t.get("TC_REASON_DAILY_LOGIN_STREAK", player)
+        return t.get("tc.reason.daily.login.streak", player)
                 .replace("PH_STREAK", Integer.toString(streakCount));
     }
 
     private String sectorDiscoveryReason(Player player, int sectorX, int sectorY, String region, boolean firstDiscoverer) {
-        String reasonKey = firstDiscoverer ? "TC_REASON_SECTOR_DISCOVERY_FIRST" : "TC_REASON_SECTOR_DISCOVERY";
+        String reasonKey = firstDiscoverer ? "tc.reason.sector.discovery.first" : "tc.reason.sector.discovery";
         return t.get(reasonKey, player)
                 .replace("PH_SECTOR_X", Integer.toString(sectorX))
                 .replace("PH_SECTOR_Y", Integer.toString(sectorY))
@@ -426,16 +425,19 @@ class RewardsRuntime extends Plugin {
 
     private String sectorRegion(Player player) {
         try {
-            return RegionHelper.getRegionName(player);
+            var biome = player.getPosition() == null ? null : World.getBiome(player.getPosition());
+            return biome == null || biome.name == null || biome.name.isBlank()
+                    ? "Unknown"
+                    : biome.name;
         } catch (RuntimeException ex) {
-            logger().warn("Could not resolve sector discovery region: " + ex.getMessage());
+            logger().warn("Could not resolve sector discovery biome: " + ex.getMessage());
             return "Unknown";
         }
     }
 
     private String localizedRegion(Player player, String region) {
         if (region == null || region.isBlank() || "Unknown".equalsIgnoreCase(region)) {
-            return t.get("TC_REGION_UNKNOWN", player);
+            return t.get("tc.region.unknown", player);
         }
         return region;
     }
@@ -496,23 +498,9 @@ class RewardsRuntime extends Plugin {
                 || !isPlayerSettingEnabled(player, RewardsPlayerPluginSettings.DEBUG_ENEMY_NPC_KILL_KEY, false)) {
             return;
         }
-        player.sendTextMessage(t.get("TC_MSG_ENEMY_NPC_DEBUG_NO_REWARD", player)
+        player.sendTextMessage(t.get("tc.msg.enemy.npc.debug.no.reward", player)
                 .replace("PH_TYPE_ID", Long.toString(npc.getTypeID()))
                 .replace("PH_DEFINITION_NAME", definitionName.isBlank() ? "<empty>" : definitionName));
-    }
-
-    private boolean isLightningRewardWeather() {
-        WeatherDefs.Weather weather = Server.getCurrentWeather();
-        if (weather == null) {
-            return false;
-        }
-        String weatherName = weather.name == null ? "" : weather.name.toLowerCase();
-        return weather.thundernearintensity > 0
-                || weather.thunderfarintensity > 0
-                || weather.lightningstrikechance > 0
-                || weatherName.contains("thunder")
-                || weatherName.contains("storm")
-                || weatherName.contains("hurricane");
     }
 
     private void sendDiscord(String messageKey, Player player, long amount) {
@@ -537,8 +525,8 @@ class RewardsRuntime extends Plugin {
         if (lang == null || lang.isBlank()) {
             lang = "en";
         }
-        String localizedRegion = "Unknown".equalsIgnoreCase(region) ? t.get("TC_REGION_UNKNOWN", lang) : region;
-        String message = t.get("TC_DISCORD_SECTOR_FIRST_DISCOVERY", lang)
+        String localizedRegion = "Unknown".equalsIgnoreCase(region) ? t.get("tc.region.unknown", lang) : region;
+        String message = t.get("tc.discord.sector.first.discovery", lang)
                 .replace("PH_PLAYER", player.getName())
                 .replace("PH_AMOUNT", Long.toString(amount))
                 .replace("PH_SECTOR_X", Integer.toString(sectorX))

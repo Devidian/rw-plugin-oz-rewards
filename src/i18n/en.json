@@ -1,0 +1,333 @@
+{
+  "tc": {
+    "btn": {
+      "off": "Off",
+      "on": "On"
+    },
+    "cmd": {
+      "help": "Help:\nAvailable chat commands:\n\u003ccolor\u003dred\u003e/PH_PLUGIN_CMD status\u003c/color\u003e shows plugin status\n\u003ccolor\u003dred\u003e/PH_PLUGIN_CMD open\u003c/color\u003e opens the plugin menu\n\u003ccolor\u003dred\u003e/PH_PLUGIN_CMD help\u003c/color\u003e shows this help",
+      "status": "Plugin status\nVersion: PH_VERSION\nWallet: PH_WALLET_STATUS\nDiscord: PH_DISCORD_STATUS"
+    },
+    "data": {
+      "col": {
+        "description": "Description"
+      },
+      "hell": {
+        "reached": {
+          "at": "First hell visit timestamp"
+        }
+      },
+      "login": {
+        "last": {
+          "gmt": {
+            "date": "Last daily login date (GMT)"
+          }
+        },
+        "streak": {
+          "count": "Daily login streak count"
+        }
+      },
+      "orbit": {
+        "reached": {
+          "at": "First orbit visit timestamp"
+        }
+      }
+    },
+    "discord": {
+      "animal": {
+        "reward": "PH_PLAYER received PH_AMOUNT coins for killing an aggressive animal."
+      },
+      "enemy": {
+        "npc": {
+          "reward": "PH_PLAYER received PH_AMOUNT coins for killing an enemy NPC."
+        }
+      },
+      "hell": {
+        "reward": "PH_PLAYER received PH_AMOUNT coins for reaching hell for the first time."
+      },
+      "lightning": {
+        "reward": "PH_PLAYER received PH_AMOUNT coins for surviving a storm strike."
+      },
+      "login": {
+        "reward": "PH_PLAYER received PH_AMOUNT coins for the daily login reward."
+      },
+      "orbit": {
+        "reward": "PH_PLAYER received PH_AMOUNT coins for reaching orbit for the first time."
+      },
+      "sector": {
+        "first": {
+          "discovery": "PH_PLAYER discovered sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION) first and received PH_AMOUNT coins."
+        }
+      }
+    },
+    "err": {
+      "cmd": {
+        "unknown": "Unknown command. Type \u003ccolor\u003dred\u003e/PH_PLUGIN_CMD help\u003c/color\u003e for help."
+      }
+    },
+    "label": {
+      "debug": {
+        "enemy": {
+          "npc": {
+            "kill": "Admin debug for unrewarded NPC kills"
+          }
+        }
+      },
+      "notify": {
+        "animal": {
+          "kill": "Aggressive animal reward messages"
+        },
+        "enemy": {
+          "npc": {
+            "kill": "Enemy NPC reward messages"
+          }
+        },
+        "login": "Daily login reward messages"
+      },
+      "rewards": {
+        "shortcut": "Show Rewards shortcut in /ozt and inventory"
+      }
+    },
+    "msg": {
+      "animal": {
+        "reward": "Aggressive animal reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+      },
+      "enemy": {
+        "npc": {
+          "debug": {
+            "no": {
+              "reward": "Enemy NPC debug: no reward for NPC typeId\u003d\u003ccolor\u003dyellow\u003ePH_TYPE_ID\u003c/color\u003e, matchName\u003d\u003ccolor\u003dyellow\u003ePH_DEFINITION_NAME\u003c/color\u003e."
+            }
+          },
+          "reward": "Enemy NPC reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+        }
+      },
+      "hell": {
+        "reward": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e reached hell for the first time and received \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+      },
+      "lightning": {
+        "reward": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e survived a storm strike and received \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+      },
+      "login": {
+        "reward": "Daily reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins. Login streak: \u003ccolor\u003dyellow\u003ePH_STREAK\u003c/color\u003e."
+      },
+      "orbit": {
+        "reward": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e reached orbit for the first time and received \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+      },
+      "plugin": {
+        "welcome": "➡️ \u003ccolor\u003d#F00000\u003ePH_PLUGIN_NAME\u003c/color\u003e | \u003ccolor\u003d#F0F000\u003evPH_PLUGIN_VERSION\u003c/color\u003e | \u003ccolor\u003d#C0C0C0\u003e/PH_PLUGIN_CMD\u003c/color\u003e | loaded!"
+      },
+      "sector": {
+        "first": {
+          "discovery": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e entered sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) first and received \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+        },
+        "personal": {
+          "discovery": "Sector discovery reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins for sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e)."
+        }
+      }
+    },
+    "reason": {
+      "animal": {
+        "kill": "Aggressive animal kill reward"
+      },
+      "daily": {
+        "login": {
+          "$value": "Daily login reward",
+          "streak": "Daily login reward in a row (PH_STREAK)"
+        }
+      },
+      "enemy": {
+        "npc": {
+          "kill": "Enemy NPC kill reward"
+        }
+      },
+      "hell": "First hell visit reward",
+      "lightning": "Lightning survival reward",
+      "npc": {
+        "kill": "Reward for kill: PH_NPC_TYPE"
+      },
+      "orbit": "First orbit visit reward",
+      "sector": {
+        "discovery": {
+          "$value": "Reward for discovering sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION)",
+          "first": "First discoverer bonus for sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION)"
+        }
+      }
+    },
+    "region": {
+      "unknown": "Unknown"
+    },
+    "rewards": {
+      "info": {
+        "panel": {
+          "info": "\u003cb\u003ePH_PLUGIN_NAME\u003c/b\u003e\nVersion: PH_VERSION\nCommand: /PH_PLUGIN_CMD\n\nRewards grants Wallet-backed rewards for logins, kills, survival events, orbit/hell visits, and sector discovery.",
+          "status": "\u003cb\u003eRewards status\u003c/b\u003e\nWallet: PH_WALLET_STATUS\nDiscord: PH_DISCORD_STATUS\nDaily login: PH_DAILY_LOGIN\nEnemy NPC kills: PH_ENEMY_NPC\nAggressive animals: PH_AGGRESSIVE_ANIMAL\nLightning: PH_LIGHTNING\nOrbit: PH_ORBIT\nHell: PH_HELL\nSector discovery: PH_SECTOR_DISCOVERY"
+        }
+      }
+    },
+    "setting": {
+      "aggressiveanimalkill": {
+        "enabled": {
+          "desc": "Enables aggressive animal kill rewards.",
+          "label": "Aggressive animal rewards"
+        },
+        "rewardoverrides": {
+          "desc": "Comma-separated animal reward overrides such as wolf\u003d15.",
+          "label": "Animal reward overrides"
+        },
+        "reward": {
+          "desc": "Default reward for aggressive animal kills.",
+          "label": "Aggressive animal reward"
+        }
+      },
+      "animals": {
+        "desc": "Aggressive animal kill reward settings.",
+        "label": "Aggressive animals"
+      },
+      "dailylogin": {
+        "basebonus": {
+          "desc": "Base amount for daily login rewards.",
+          "label": "Daily login base"
+        },
+        "desc": "Daily login reward formula.",
+        "enabled": {
+          "desc": "Enables daily login rewards.",
+          "label": "Daily login"
+        },
+        "factor": {
+          "desc": "Decimal streak multiplier for daily login rewards.",
+          "label": "Daily login factor"
+        },
+        "label": "Daily login",
+        "streaklimit": {
+          "desc": "Maximum exponent used by the daily login streak formula.",
+          "label": "Daily login streak limit"
+        }
+      },
+      "discordrewardschannelid": {
+        "desc": "Discord channel id for reward announcements; 0 disables Discord reward messages.",
+        "label": "Discord rewards channel"
+      },
+      "discord": {
+        "desc": "Optional Discord reward announcements.",
+        "label": "Discord"
+      },
+      "enemynpckill": {
+        "definitionnames": {
+          "desc": "Comma-separated definition-name fragments treated as rewardable enemies.",
+          "label": "Enemy NPC definitions"
+        },
+        "enabled": {
+          "desc": "Enables enemy NPC kill rewards.",
+          "label": "Enemy NPC rewards"
+        },
+        "rewardoverrides": {
+          "desc": "Comma-separated definition reward overrides such as skeleton\u003d5.",
+          "label": "Enemy NPC reward overrides"
+        },
+        "reward": {
+          "desc": "Default reward for matched enemy NPC kills.",
+          "label": "Enemy NPC reward"
+        },
+        "typeids": {
+          "desc": "Comma-separated NPC type ids treated as rewardable enemies.",
+          "label": "Enemy NPC type ids"
+        }
+      },
+      "enemynpc": {
+        "desc": "Enemy NPC kill reward detection and payout.",
+        "label": "Enemy NPC kills"
+      },
+      "general": {
+        "desc": "Logging, reload, and welcome behavior.",
+        "label": "General"
+      },
+      "hell": {
+        "chunky": {
+          "desc": "Maximum vertical chunk for the hell reward.",
+          "label": "Hell chunk Y"
+        },
+        "enabled": {
+          "desc": "Enables the first hell visit reward.",
+          "label": "Hell reward"
+        },
+        "reward": {
+          "desc": "Reward for first hell visit.",
+          "label": "Hell reward amount"
+        }
+      },
+      "lightning": {
+        "enabled": {
+          "desc": "Enables lightning/storm rewards.",
+          "label": "Lightning rewards"
+        },
+        "messagetype": {
+          "desc": "Announcement mode for lightning rewards: yell or chat.",
+          "label": "Lightning message type"
+        },
+        "reward": {
+          "desc": "Reward paid after the lightning workaround triggers.",
+          "label": "Lightning reward"
+        }
+      },
+      "loglevel": {
+        "desc": "Controls Rewards logging verbosity.",
+        "label": "Log level"
+      },
+      "orbit": {
+        "chunky": {
+          "desc": "Minimum vertical chunk for the orbit reward.",
+          "label": "Orbit chunk Y"
+        },
+        "enabled": {
+          "desc": "Enables the first orbit visit reward.",
+          "label": "Orbit reward"
+        },
+        "reward": {
+          "desc": "Reward for first orbit visit.",
+          "label": "Orbit reward amount"
+        }
+      },
+      "reloadonchange": {
+        "desc": "Documents that Rewards settings reload when settings.properties changes.",
+        "label": "Reload on change"
+      },
+      "sectordiscovery": {
+        "basereward": {
+          "desc": "Base reward multiplied by sector distance.",
+          "label": "Sector base reward"
+        },
+        "desc": "Sector discovery reward formula and announcement behavior.",
+        "enabled": {
+          "desc": "Enables sector discovery rewards.",
+          "label": "Sector discovery rewards"
+        },
+        "firstdiscoverermultiplier": {
+          "desc": "Decimal multiplier for the global first discoverer.",
+          "label": "First discoverer multiplier"
+        },
+        "label": "Sector discovery",
+        "messagetype": {
+          "desc": "Announcement mode for first discoveries: yell or chat.",
+          "label": "Sector message type"
+        },
+        "mode": {
+          "desc": "Reward mode: firstOnly or perPlayer.",
+          "label": "Sector discovery mode"
+        }
+      },
+      "sendpluginwelcome": {
+        "desc": "Shows a short Rewards message when a player joins.",
+        "label": "Welcome message"
+      },
+      "survival": {
+        "desc": "Lightning, orbit, and hell visit reward settings.",
+        "label": "Survival milestones"
+      }
+    },
+    "status": {
+      "available": "available",
+      "missing": "missing"
+    }
+  }
+}

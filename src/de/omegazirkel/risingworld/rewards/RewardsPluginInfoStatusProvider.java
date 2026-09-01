@@ -23,7 +23,7 @@ public class RewardsPluginInfoStatusProvider implements PluginInfoStatusProvider
 
     @Override
     public String getInfo(Player player) {
-        return t().get("TC_REWARDS_INFO_PANEL_INFO", player)
+        return t().get("tc.rewards.info.panel.info", player)
                 .replace("PH_PLUGIN_NAME", pluginName)
                 .replace("PH_VERSION", version)
                 .replace("PH_PLUGIN_CMD", "rewards");
@@ -32,7 +32,7 @@ public class RewardsPluginInfoStatusProvider implements PluginInfoStatusProvider
     @Override
     public String getStatus(Player player) {
         PluginSettings settings = PluginSettings.getInstance();
-        return t().get("TC_REWARDS_INFO_PANEL_STATUS", player)
+        return t().get("tc.rewards.info.panel.status", player)
                 .replace("PH_WALLET_STATUS", available(Wallet.isAvailable()))
                 .replace("PH_DISCORD_STATUS", available(DiscordConnect.isDiscordAvailable()))
                 .replace("PH_DAILY_LOGIN", String.valueOf(settings.dailyLoginEnabled))
