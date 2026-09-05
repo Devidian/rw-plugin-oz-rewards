@@ -5,6 +5,8 @@
 ## [0.3.10] - 2026-09-05 | PluginAPI compatibility
 
 - build: update the bundled PluginAPI and default settings baseline for the native web release wave.
+- feat: add configurable biome-specific reward handling.
+- change: migrate Rewards settings and translations to JSON while retaining existing configuration.
 
 ## [0.3.9] - 2026-08-05 | CI maintenance
 
