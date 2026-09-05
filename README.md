@@ -36,7 +36,7 @@ The Rewards radial menu uses the shared Tools Info/Status icon for the same stat
 
 ## Settings
 
-Settings are copied from `settings.default.properties` to `settings.properties` on first run.
+Settings are copied from `settings.default.json` to `settings.<world>.json` on first run.
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
@@ -107,7 +107,7 @@ The first orbit and first hell visit timestamps are stored as hidden player sett
 
 Enemy NPC detection defaults to NPC type IDs `210` and `215` plus NPC definition names containing `bandit` or `skeleton`. Verify the actual server NPC definitions and adjust `enemyNpcKill.typeIds`, `enemyNpcKill.definitionNames`, or `enemyNpcKill.rewardOverrides` if needed. Admins can enable Enemy NPC debug mode in the shared player settings overlay to show the type ID and definition name for killed NPCs that do not currently grant a reward.
 
-The old `banditKill.*` settings and `oz.rewards.notify.banditKill` player setting key were renamed and are no longer read. Existing servers must migrate their `settings.properties` values to `enemyNpcKill.*`.
+The old `banditKill.*` settings and `oz.rewards.notify.banditKill` player setting key were renamed and are no longer read. Existing servers must migrate their `settings.<world>.json` values to `enemyNpcKill.*`.
 
 The lightning reward intentionally uses `PlayerDamageEvent.Cause.Environment` plus thunder/storm/hurricane weather checks until Rising World exposes a dedicated lightning hook.
 
@@ -116,3 +116,13 @@ Orbit and hell rewards are checked when a player enters a new chunk and again on
 Sector discovery rewards are checked on `PlayerEnterSectorEvent`. The plugin stores global first discoveries and per-player sector reward entries in its SQLite database. Region names are resolved through Tools `RegionHelper`; if the helper cannot resolve a stable region, `Unknown` is stored. Unreleased development databases with the old `biome` sector discovery column are recreated with the new `region` column on startup.
 
 Players can hide the Rewards shortcut from `/ozt` and the inventory shortcut panel in Rewards player settings.
+
+## JSON-only distribution
+
+Settings defaults (`settings.default.json`) and translations (`i18n/*.json`)
+are shipped only as JSON. Legacy default and translation `.properties` files
+are no longer included. Runtime settings remain world-scoped as
+`settings.<world>.json`; migration of an existing `settings.properties` and
+its backup remains supported. Updating the package does not delete old files
+already present on the server. Use `mvn clean package` for a fresh local
+package; ZIP assembly also excludes stale legacy settings and translations.
