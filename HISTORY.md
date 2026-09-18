@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.15] - 2026-09-19 | German sector cap setting
+
+- change: translate the sector-discovery coordinate-cap editor entry to German.
+
 ## [0.3.12] - 2026-09-18 | Release pipeline compatibility
 
 - fix: install PluginAPI 0.9.3.2 in release validation and publishing workflows.
