@@ -376,7 +376,9 @@ class RewardsRuntime extends Plugin {
     }
 
     private long calculateSectorDiscoveryBaseReward(int sectorX, int sectorY) {
-        long distance = Math.abs((long) sectorX) + Math.abs((long) sectorY);
+        long coordinateCap = Math.max(0L, s.sectorDiscoveryCoordinateCap);
+        long distance = Math.min(Math.abs((long) sectorX), coordinateCap)
+                + Math.min(Math.abs((long) sectorY), coordinateCap);
         return Math.max(0L, distance * s.sectorDiscoveryBaseReward);
     }
 

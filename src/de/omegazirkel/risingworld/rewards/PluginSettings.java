@@ -47,6 +47,7 @@ public class PluginSettings {
     public boolean sectorDiscoveryEnabled = true;
     public String sectorDiscoveryMode = "firstOnly";
     public long sectorDiscoveryBaseReward = 50;
+    public int sectorDiscoveryCoordinateCap = 100;
     public double sectorDiscoveryFirstDiscovererMultiplier = 2.0;
     public String sectorDiscoveryMessageType = "yell";
     public long discordRewardsChannelId = 0;
@@ -116,6 +117,7 @@ public class PluginSettings {
             sectorDiscoveryEnabled = bool(settings, "sectorDiscovery.enabled", sectorDiscoveryEnabled);
             sectorDiscoveryMode = sectorDiscoveryMode(settings.getProperty("sectorDiscovery.mode", sectorDiscoveryMode));
             sectorDiscoveryBaseReward = lng(settings, "sectorDiscovery.baseReward", sectorDiscoveryBaseReward);
+            sectorDiscoveryCoordinateCap = Math.max(0, integer(settings, "sectorDiscovery.coordinateCap", sectorDiscoveryCoordinateCap));
             sectorDiscoveryFirstDiscovererMultiplier = dbl(settings, "sectorDiscovery.firstDiscovererMultiplier",
                     sectorDiscoveryFirstDiscovererMultiplier);
             sectorDiscoveryMessageType = settings.getProperty("sectorDiscovery.messageType", sectorDiscoveryMessageType)
@@ -201,6 +203,9 @@ public class PluginSettings {
                 entry("sectorDiscovery.baseReward", "Sector base reward",
                         "Base reward multiplied by sector distance.", sectorDiscoveryBaseReward, "50",
                         AdminSettingsType.INTEGER),
+                entry("sectorDiscovery.coordinateCap", "Sector coordinate cap",
+                        "Coordinates beyond this absolute sector value use the same maximum discovery reward.",
+                        sectorDiscoveryCoordinateCap, "100", AdminSettingsType.INTEGER),
                 entry("sectorDiscovery.firstDiscovererMultiplier", "First discoverer multiplier",
                         "Decimal multiplier for the global first discoverer.",
                         sectorDiscoveryFirstDiscovererMultiplier, "2.0", AdminSettingsType.DECIMAL),

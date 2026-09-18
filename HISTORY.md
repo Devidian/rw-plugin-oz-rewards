@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.11] - 2026-09-18 | Sector discovery reward cap
+
+- feat: cap each sector coordinate independently for discovery-reward calculation, defaulting to absolute coordinate `100` and configurable by administrators.
+
 ## [0.3.10] - 2026-09-05 | PluginAPI compatibility
 
 - build: update the bundled PluginAPI and default settings baseline for the native web release wave.
