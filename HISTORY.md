@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.3.12] - 2026-09-18 | Release pipeline compatibility
+
+- fix: install PluginAPI 0.9.3.2 in release validation and publishing workflows.
+
 ## [0.3.11] - 2026-09-18 | Sector discovery reward cap
 
 - feat: cap each sector coordinate independently for discovery-reward calculation, defaulting to absolute coordinate `100` and configurable by administrators.
