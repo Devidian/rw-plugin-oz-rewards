@@ -2,6 +2,10 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## [0.4.0] - 2026-09-23 | JSON-only settings runtime
+
+- change: use world-scoped JSON settings only; transfer legacy Properties values manually.
+
 ## [0.3.15] - 2026-09-19 | German sector cap setting
 
 - change: translate the sector-discovery coordinate-cap editor entry to German.
