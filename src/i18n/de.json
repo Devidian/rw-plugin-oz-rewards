@@ -263,7 +263,8 @@
         },
         "messagetype": {
           "desc": "Ankündigungsmodus für Blitz-Belohnungen: yell oder chat.",
-          "label": "Blitz-Nachrichtentyp"
+          "label": "Blitz-Nachrichtentyp",
+          "option": {"yell": "Einblendung", "chat": "Chat"}
         },
         "reward": {
           "desc": "Belohnung, die nach Auslösen des Blitz-Workarounds ausgezahlt wird.",
@@ -309,11 +310,13 @@
         "label": "Sektorentdeckung",
         "messagetype": {
           "desc": "Ankündigungsmodus für Erstentdeckungen: yell oder chat.",
-          "label": "Sektor-Nachrichtentyp"
+          "label": "Sektor-Nachrichtentyp",
+          "option": {"yell": "Einblendung", "chat": "Chat"}
         },
         "mode": {
           "desc": "Belohnungsmodus: firstOnly oder perPlayer.",
-          "label": "Sektorentdeckungsmodus"
+          "label": "Sektorentdeckungsmodus",
+          "option": {"firstonly": "Nur Erstentdecker", "perplayer": "Pro Spieler"}
         }
       },
       "sendpluginwelcome": {

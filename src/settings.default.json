@@ -29,7 +29,7 @@
     "reward": "2500"
   },
   "orbit": {
-    "chunkY": "64",
+    "chunkY": "16",
     "enabled": "true",
     "reward": "5000"
   },

@@ -263,7 +263,8 @@
         },
         "messagetype": {
           "desc": "Announcement mode for lightning rewards: yell or chat.",
-          "label": "Lightning message type"
+          "label": "Lightning message type",
+          "option": {"yell": "On-screen", "chat": "Chat"}
         },
         "reward": {
           "desc": "Reward paid after the lightning workaround triggers.",
@@ -309,11 +310,13 @@
         "label": "Sector discovery",
         "messagetype": {
           "desc": "Announcement mode for first discoveries: yell or chat.",
-          "label": "Sector message type"
+          "label": "Sector message type",
+          "option": {"yell": "On-screen", "chat": "Chat"}
         },
         "mode": {
           "desc": "Reward mode: firstOnly or perPlayer.",
-          "label": "Sector discovery mode"
+          "label": "Sector discovery mode",
+          "option": {"firstonly": "First discoverer only", "perplayer": "Per player"}
         }
       },
       "sendpluginwelcome": {

@@ -39,7 +39,7 @@ public class PluginSettings {
     public long lightningReward = 250;
     public String lightningMessageType = "yell";
     public boolean orbitEnabled = true;
-    public int orbitChunkY = 64;
+    public int orbitChunkY = 16;
     public long orbitReward = 5000;
     public boolean hellEnabled = true;
     public int hellChunkY = -10;
@@ -104,7 +104,7 @@ public class PluginSettings {
             lightningReward = lng(settings, "lightning.reward", lightningReward);
             lightningMessageType = settings.getProperty("lightning.messageType", lightningMessageType).trim();
             orbitEnabled = bool(settings, "orbit.enabled", orbitEnabled);
-            orbitChunkY = integer(settings, "orbit.chunkY", orbitChunkY);
+            orbitChunkY = Math.min(16, integer(settings, "orbit.chunkY", orbitChunkY));
             orbitReward = lng(settings, "orbit.reward", orbitReward);
             hellEnabled = bool(settings, "hell.enabled", hellEnabled);
             hellChunkY = integer(settings, "hell.chunkY", hellChunkY);
@@ -172,13 +172,13 @@ public class PluginSettings {
                         "true", AdminSettingsType.BOOLEAN),
                 entry("lightning.reward", "Lightning reward", "Reward paid after the lightning workaround triggers.",
                         lightningReward, "2500", AdminSettingsType.INTEGER),
-                readOnlyEntry("lightning.messageType", "Lightning message type",
+                selectEntry("lightning.messageType", "Lightning message type",
                         "Announcement mode for lightning rewards: yell or chat.", lightningMessageType, "yell",
-                        AdminSettingsType.STRING),
+                        List.of("yell", "chat")),
                 entry("orbit.enabled", "Orbit reward", "Enables the first orbit visit reward.", orbitEnabled, "true",
                         AdminSettingsType.BOOLEAN),
                 entry("orbit.chunkY", "Orbit chunk Y", "Minimum vertical chunk for the orbit reward.", orbitChunkY,
-                        "64", AdminSettingsType.INTEGER),
+                        "16", AdminSettingsType.INTEGER),
                 entry("orbit.reward", "Orbit reward amount", "Reward for first orbit visit.", orbitReward, "5000",
                         AdminSettingsType.INTEGER),
                 entry("hell.enabled", "Hell reward", "Enables the first hell visit reward.", hellEnabled, "true",
@@ -192,9 +192,9 @@ public class PluginSettings {
                 entry("sectorDiscovery.enabled", "Sector discovery rewards",
                         "Enables sector discovery rewards.", sectorDiscoveryEnabled, "true",
                         AdminSettingsType.BOOLEAN),
-                readOnlyEntry("sectorDiscovery.mode", "Sector discovery mode",
+                selectEntry("sectorDiscovery.mode", "Sector discovery mode",
                         "Reward mode: firstOnly or perPlayer.", sectorDiscoveryMode, "perPlayer",
-                        AdminSettingsType.STRING),
+                        List.of("firstOnly", "perPlayer")),
                 entry("sectorDiscovery.baseReward", "Sector base reward",
                         "Base reward multiplied by sector distance.", sectorDiscoveryBaseReward, "50",
                         AdminSettingsType.INTEGER),
@@ -204,9 +204,9 @@ public class PluginSettings {
                 entry("sectorDiscovery.firstDiscovererMultiplier", "First discoverer multiplier",
                         "Decimal multiplier for the global first discoverer.",
                         sectorDiscoveryFirstDiscovererMultiplier, "2.0", AdminSettingsType.DECIMAL),
-                readOnlyEntry("sectorDiscovery.messageType", "Sector message type",
+                selectEntry("sectorDiscovery.messageType", "Sector message type",
                         "Announcement mode for first discoveries: yell or chat.", sectorDiscoveryMessageType, "yell",
-                        AdminSettingsType.STRING),
+                        List.of("yell", "chat")),
                 AdminSettingsEntry.group("discord", "Discord", "Optional Discord reward announcements."),
                 entry("discordRewardsChannelId", "Discord rewards channel",
                         "Discord channel id for reward announcements; 0 disables Discord reward messages.",
@@ -237,6 +237,12 @@ public class PluginSettings {
                 type,
                 false,
                 null);
+    }
+
+    private AdminSettingsEntry selectEntry(String key, String label, String description, String value,
+            String defaultValue, List<String> options) {
+        return new AdminSettingsEntry(key, label, description, value, defaultValue, AdminSettingsType.SELECT,
+                false, selected -> SettingsFileEditor.writeValue(settingsPath(), key, selected), options);
     }
 
     private Path settingsPath() {

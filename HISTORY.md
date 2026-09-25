@@ -2,6 +2,13 @@
 
 <https://www.conventionalcommits.org/en/v1.0.0/>
 
+## Unreleased
+
+## [0.4.1] - 2026-09-25 | Reward settings and orbit threshold
+
+- fix: use chunk Y 16 as the orbit default and cap older higher settings at 16.
+- change: allow admins to select lightning and sector-discovery message modes and the sector reward mode.
+
 ## [0.4.0] - 2026-09-23 | JSON-only settings runtime
 
 - change: use world-scoped JSON settings only; transfer legacy Properties values manually.

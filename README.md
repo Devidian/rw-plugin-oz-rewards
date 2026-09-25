@@ -10,6 +10,8 @@ OZ Rewards adds wallet rewards for recurring and event-based player activity in 
 - Aggressive and defensive-aggressive animal kill rewards
 - Storm/lightning workaround reward for environment damage during thunder, storm, or hurricane weather
 - First orbit visit reward when a player reaches a configurable vertical chunk
+- The orbit threshold defaults to chunk Y 16; configured values above 16 are treated as 16.
+- Admins can select lightning and sector-discovery announcement modes and the sector reward mode.
 - First hell visit reward when a player reaches a configurable vertical chunk
 - Configurable sector discovery rewards for first global or per-player discoveries
 - Player notification toggles through the shared plugin settings overlay
