@@ -1,5 +1,7 @@
 # OZ Rewards
 
+Sector discovery messages use the world region name at the player position, including Arctic, instead of the local biome name.
+
 OZ Rewards adds wallet rewards for recurring and event-based player activity in Rising World.
 
 ## Features

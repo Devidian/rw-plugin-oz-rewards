@@ -427,12 +427,12 @@ class RewardsRuntime extends Plugin {
 
     private String sectorRegion(Player player) {
         try {
-            var biome = player.getPosition() == null ? null : World.getBiome(player.getPosition());
-            return biome == null || biome.name == null || biome.name.isBlank()
+            var region = player.getPosition() == null ? null : World.getRegion(player.getPosition());
+            return region == null || region.name == null || region.name.isBlank()
                     ? "Unknown"
-                    : biome.name;
+                    : region.name;
         } catch (RuntimeException ex) {
-            logger().warn("Could not resolve sector discovery biome: " + ex.getMessage());
+            logger().warn("Could not resolve sector discovery region: " + ex.getMessage());
             return "Unknown";
         }
     }

@@ -4,6 +4,10 @@
 
 ## Unreleased
 
+## [0.4.2] - 2026-09-30 | Correct sector region
+
+- fix: use the world region rather than the biome name in sector discovery messages.
+
 ## [0.4.1] - 2026-09-25 | Reward settings and orbit threshold
 
 - fix: use chunk Y 16 as the orbit default and cap older higher settings at 16.
