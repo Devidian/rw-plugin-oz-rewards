@@ -1,5 +1,7 @@
 # OZ Rewards
 
+**Build baseline:** JDK 25 (`--release 25`) and the bundled Rising World PluginAPI 0.9.3.2 JAR.
+
 Sector discovery messages use the world region name at the player position, including Arctic, instead of the local biome name.
 
 OZ Rewards adds wallet rewards for recurring and event-based player activity in Rising World.
