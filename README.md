@@ -10,12 +10,13 @@ OZ Rewards adds wallet rewards for recurring and event-based player activity in 
 
 - Daily login reward once per GMT date
 - Login streak multiplier with configurable cap
-- Enemy NPC kill rewards by configurable NPC type IDs and definition names
-- Aggressive and defensive-aggressive animal kill rewards
+- Enemy NPC and animal kill rewards from `killrewards.[worldname].json`; 0 disables a payout and a negative value applies an affordable Wallet penalty.
+- Administrators can edit every NPC type through the radial menu's management overlay. A new world catalog is seeded once from effective legacy settings.
 - Storm/lightning workaround reward for environment damage during thunder, storm, or hurricane weather
 - First orbit visit reward when a player reaches a configurable vertical chunk
 - The orbit threshold defaults to chunk Y 16; configured values above 16 are treated as 16.
 - Admins can select lightning and sector-discovery announcement modes and the sector reward mode.
+- The first sector discoverer is claimed immediately; the destination region is announced after the configured delay (10 seconds by default).
 - First hell visit reward when a player reaches a configurable vertical chunk
 - Configurable sector discovery rewards for first global or per-player discoveries
 - Player notification toggles through the shared plugin settings overlay

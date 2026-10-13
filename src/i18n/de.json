@@ -89,8 +89,9 @@
       }
     },
     "msg": {
+      "npc": { "penalty": "Strafe für Tötung: PH_AMOUNT Münzen abgezogen." },
       "animal": {
-        "reward": "Belohnung für aggressives Tier: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen."
+        "reward": "Belohnung für Tier-Jagd: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen."
       },
       "enemy": {
         "npc": {
@@ -150,7 +151,9 @@
       "sector": {
         "discovery": {
           "$value": "Belohnung für entdecken von Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION)",
-          "first": "Erstentdecker-Bonus für Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION)"
+          "first": "Erstentdecker-Bonus für Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION)",
+          "pending": "Belohnung für Sektor PH_SECTOR_X PH_SECTOR_Y",
+          "pending_first": "Erstentdecker-Bonus für Sektor PH_SECTOR_X PH_SECTOR_Y"
         }
       }
     },
@@ -158,6 +161,16 @@
       "unknown": "Unbekannt"
     },
     "rewards": {
+      "manage": {
+        "title": "Verwaltung",
+        "description": "Belohnungen für Tötungen nach NPC-Typ",
+        "name": "Name",
+        "id": "ID",
+        "reward": "Belohnung",
+        "action": "Aktion",
+        "prompt": "Belohnung eingeben: 0 entfernt den Eintrag, negative Werte sind Strafen.",
+        "invalid": "Ungültiger Belohnungswert."
+      },
       "info": {
         "panel": {
           "info": "\u003cb\u003ePH_PLUGIN_NAME\u003c/b\u003e\nVersion: PH_VERSION\nBefehl: /PH_PLUGIN_CMD\n\nRewards vergibt Wallet-basierte Belohnungen für Logins, Kills, Überlebensereignisse, Orbit-/Höllenbesuche und Sektorentdeckung.",
@@ -169,7 +182,7 @@
       "aggressiveanimalkill": {
         "enabled": {
           "desc": "Aktiviert Belohnungen für Kills aggressiver Tiere.",
-          "label": "Belohnungen für aggressive Tiere"
+          "label": "Belohnungen für Tier-Jagd"
         },
         "rewardoverrides": {
           "desc": "Kommagetrennte Tier-Belohnungsüberschreibungen, z. B. wolf\u003d15.",
@@ -293,6 +306,10 @@
         "desc": "Dokumentiert, dass Rewards-Einstellungen neu geladen werden, wenn sich settings.properties ändert.",
         "label": "Bei Änderung neu laden"
       },
+      "killrewards": {
+        "desc": "Belohnungen und Strafen für NPC- und Tier-Tötungen stehen in killrewards.[worldname].json.",
+        "label": "Belohnungen für Tötungen"
+      },
       "sectordiscovery": {
         "basereward": {
           "desc": "Basisbelohnung multipliziert mit der Sektorentfernung.",
@@ -317,6 +334,10 @@
           "desc": "Belohnungsmodus: firstOnly oder perPlayer.",
           "label": "Sektorentdeckungsmodus",
           "option": {"firstonly": "Nur Erstentdecker", "perplayer": "Pro Spieler"}
+        },
+        "regiondelayseconds": {
+          "desc": "Wartezeit vor der Bestimmung und Ankündigung der Zielregion.",
+          "label": "Regionsmeldung verzögern (Sekunden)"
         }
       },
       "sendpluginwelcome": {

@@ -23,6 +23,16 @@ public final class Wallet {
                 : bridge.depositDefault(playerDbId, value, reason, pluginIdentifier);
     }
 
+    public static WalletBridge.WalletCallResult withdrawDefault(int playerDbId, long value, String reason,
+            String pluginIdentifier) {
+        return bridge == null ? new WalletBridge.WalletCallResult(false, "Wallet unavailable")
+                : bridge.withdrawDefault(playerDbId, value, reason, pluginIdentifier);
+    }
+
+    public static long balanceDefault(int playerDbId) {
+        return bridge == null ? 0L : bridge.balanceDefault(playerDbId);
+    }
+
     public static boolean isSuccess(WalletBridge.WalletCallResult result) {
         return result != null && result.success();
     }

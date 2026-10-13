@@ -89,8 +89,9 @@
       }
     },
     "msg": {
+      "npc": { "penalty": "Kill penalty: PH_AMOUNT coins deducted." },
       "animal": {
-        "reward": "Aggressive animal reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+        "reward": "Animal hunting reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
       },
       "enemy": {
         "npc": {
@@ -150,7 +151,9 @@
       "sector": {
         "discovery": {
           "$value": "Reward for discovering sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION)",
-          "first": "First discoverer bonus for sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION)"
+          "first": "First discoverer bonus for sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION)",
+          "pending": "Reward for sector PH_SECTOR_X PH_SECTOR_Y",
+          "pending_first": "First discoverer bonus for sector PH_SECTOR_X PH_SECTOR_Y"
         }
       }
     },
@@ -158,6 +161,16 @@
       "unknown": "Unknown"
     },
     "rewards": {
+      "manage": {
+        "title": "Manage",
+        "description": "Kill rewards by NPC type",
+        "name": "Name",
+        "id": "ID",
+        "reward": "Reward",
+        "action": "Action",
+        "prompt": "Enter reward: 0 removes the entry; negative values are penalties.",
+        "invalid": "Invalid reward value."
+      },
       "info": {
         "panel": {
           "info": "\u003cb\u003ePH_PLUGIN_NAME\u003c/b\u003e\nVersion: PH_VERSION\nCommand: /PH_PLUGIN_CMD\n\nRewards grants Wallet-backed rewards for logins, kills, survival events, orbit/hell visits, and sector discovery.",
@@ -293,6 +306,10 @@
         "desc": "Documents that Rewards settings reload when settings.properties changes.",
         "label": "Reload on change"
       },
+      "killrewards": {
+        "desc": "NPC and animal kill rewards and penalties are stored in killrewards.[worldname].json.",
+        "label": "Kill rewards"
+      },
       "sectordiscovery": {
         "basereward": {
           "desc": "Base reward multiplied by sector distance.",
@@ -317,6 +334,10 @@
           "desc": "Reward mode: firstOnly or perPlayer.",
           "label": "Sector discovery mode",
           "option": {"firstonly": "First discoverer only", "perplayer": "Per player"}
+        },
+        "regiondelayseconds": {
+          "desc": "Wait before determining and announcing the destination region.",
+          "label": "Region announcement delay (seconds)"
         }
       },
       "sendpluginwelcome": {

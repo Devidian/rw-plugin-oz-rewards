@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+## [0.5.0] - 2026-10-13 | World reward catalog
+
+- feat: keep the first sector discoverer immediately and announce the destination region after a configurable delay.
+- feat: migrate kill payouts to a world-specific JSON catalog and provide an admin editor for all NPC types, including penalties.
+- ui: add a dedicated reward-management icon in modern and classic styles.
+
 ## [0.4.2] - 2026-09-30 | Correct sector region
 
 - fix: use the world region rather than the biome name in sector discovery messages.

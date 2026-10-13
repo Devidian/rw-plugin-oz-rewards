@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import de.omegazirkel.risingworld.tools.FileChangeListener;
 import de.omegazirkel.risingworld.tools.I18n;
 import de.omegazirkel.risingworld.tools.OZLogger;
+import de.omegazirkel.risingworld.rewards.KillRewardCatalog;
 import net.risingworld.api.events.EventMethod;
 import net.risingworld.api.events.Listener;
 import net.risingworld.api.events.npc.NpcDeathEvent;
@@ -31,6 +32,8 @@ public final class Rewards extends RewardsRuntime implements Listener, FileChang
     public static I18n i18n() {
         return RewardsRuntime.i18n();
     }
+
+    public static KillRewardCatalog killRewardCatalog() { return RewardsRuntime.killRewardCatalog(); }
 
     @Override
     public void onEnable() {

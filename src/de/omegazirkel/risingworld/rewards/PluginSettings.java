@@ -28,6 +28,7 @@ public class PluginSettings {
     public double dailyLoginFactor = 1.25;
     public int dailyLoginStreakLimit = 7;
     public boolean enemyNpcKillEnabled = true;
+    public boolean hasLegacyKillValues;
     public long enemyNpcKillReward = 10;
     public List<Integer> enemyNpcTypeIds = List.of(210, 215);
     public List<String> enemyNpcDefinitionNames = List.of("bandit", "skeleton");
@@ -50,6 +51,7 @@ public class PluginSettings {
     public int sectorDiscoveryCoordinateCap = 100;
     public double sectorDiscoveryFirstDiscovererMultiplier = 2.0;
     public String sectorDiscoveryMessageType = "yell";
+    public int sectorDiscoveryRegionDelaySeconds = 10;
     public long discordRewardsChannelId = 0;
     public boolean sendPluginWelcome = false;
 
@@ -82,6 +84,12 @@ public class PluginSettings {
         try {
             JsonSettingsFile.prepareWorldSettings(settingsFile);
             Properties settings = loadSettings(settingsFile);
+            hasLegacyKillValues = settings.containsKey("enemyNpcKill.reward")
+                    || settings.containsKey("enemyNpcKill.typeIds")
+                    || settings.containsKey("enemyNpcKill.definitionNames")
+                    || settings.containsKey("enemyNpcKill.rewardOverrides")
+                    || settings.containsKey("aggressiveAnimalKill.reward")
+                    || settings.containsKey("aggressiveAnimalKill.rewardOverrides");
             if (settings.isEmpty()) {
                 logger().warn("No JSON settings files found. Using defaults.");
             }
@@ -117,6 +125,8 @@ public class PluginSettings {
                     sectorDiscoveryFirstDiscovererMultiplier);
             sectorDiscoveryMessageType = settings.getProperty("sectorDiscovery.messageType", sectorDiscoveryMessageType)
                     .trim();
+            sectorDiscoveryRegionDelaySeconds = Math.max(0,
+                    integer(settings, "sectorDiscovery.regionDelaySeconds", sectorDiscoveryRegionDelaySeconds));
             discordRewardsChannelId = lng(settings, "discordRewardsChannelId", discordRewardsChannelId);
             sendPluginWelcome = bool(settings, "sendPluginWelcome", sendPluginWelcome);
             logger().info(plugin.getName() + " Plugin settings loaded");
@@ -142,30 +152,12 @@ public class PluginSettings {
                 entry("dailyLogin.streakLimit", "Daily login streak limit",
                         "Maximum exponent used by the daily login streak formula.", dailyLoginStreakLimit, "7",
                         AdminSettingsType.INTEGER),
-                AdminSettingsEntry.group("enemyNpc", "Enemy NPC kills", "Enemy NPC kill reward detection and payout."),
+                AdminSettingsEntry.group("killRewards", "Belohnungen für Tötungen", "Kill rewards are configured in killrewards.[worldname].json."),
                 entry("enemyNpcKill.enabled", "Enemy NPC rewards", "Enables enemy NPC kill rewards.",
                         enemyNpcKillEnabled, "true", AdminSettingsType.BOOLEAN),
-                entry("enemyNpcKill.reward", "Enemy NPC reward", "Default reward for matched enemy NPC kills.",
-                        enemyNpcKillReward, "10", AdminSettingsType.INTEGER),
-                readOnlyEntry("enemyNpcKill.typeIds", "Enemy NPC type ids",
-                        "Comma-separated NPC type ids treated as rewardable enemies.",
-                        joinIntegers(enemyNpcTypeIds), "210,215", AdminSettingsType.STRING),
-                readOnlyEntry("enemyNpcKill.definitionNames", "Enemy NPC definitions",
-                        "Comma-separated definition-name fragments treated as rewardable enemies.",
-                        String.join(",", enemyNpcDefinitionNames), "bandit,skeleton", AdminSettingsType.STRING),
-                readOnlyEntry("enemyNpcKill.rewardOverrides", "Enemy NPC reward overrides",
-                        "Comma-separated definition reward overrides such as skeleton=5.",
-                        joinOverrides(enemyNpcKillRewardOverrides), "", AdminSettingsType.STRING),
-                AdminSettingsEntry.group("animals", "Aggressive animals", "Aggressive animal kill reward settings."),
-                entry("aggressiveAnimalKill.enabled", "Aggressive animal rewards",
-                        "Enables aggressive animal kill rewards.", aggressiveAnimalKillEnabled, "true",
+                entry("aggressiveAnimalKill.enabled", "Belohnungen für Tier-Jagd",
+                        "Enables configured animal kill rewards.", aggressiveAnimalKillEnabled, "true",
                         AdminSettingsType.BOOLEAN),
-                entry("aggressiveAnimalKill.reward", "Aggressive animal reward",
-                        "Default reward for aggressive animal kills.", aggressiveAnimalKillReward, "5",
-                        AdminSettingsType.INTEGER),
-                readOnlyEntry("aggressiveAnimalKill.rewardOverrides", "Animal reward overrides",
-                        "Comma-separated animal reward overrides such as wolf=15.",
-                        joinOverrides(aggressiveAnimalKillRewardOverrides), "", AdminSettingsType.STRING),
                 AdminSettingsEntry.group("survival", "Survival milestones",
                         "Lightning, orbit, and hell visit reward settings."),
                 entry("lightning.enabled", "Lightning rewards", "Enables lightning/storm rewards.", lightningEnabled,
@@ -207,6 +199,9 @@ public class PluginSettings {
                 selectEntry("sectorDiscovery.messageType", "Sector message type",
                         "Announcement mode for first discoveries: yell or chat.", sectorDiscoveryMessageType, "yell",
                         List.of("yell", "chat")),
+                entry("sectorDiscovery.regionDelaySeconds", "Region delay in seconds",
+                        "Delay before resolving and announcing a discovered sector's region.",
+                        sectorDiscoveryRegionDelaySeconds, "10", AdminSettingsType.INTEGER),
                 AdminSettingsEntry.group("discord", "Discord", "Optional Discord reward announcements."),
                 entry("discordRewardsChannelId", "Discord rewards channel",
                         "Discord channel id for reward announcements; 0 disables Discord reward messages.",
