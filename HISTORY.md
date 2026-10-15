@@ -4,6 +4,10 @@
 
 ## Unreleased
 
+## [0.5.1] - 2026-10-15 | Discord event threads
+
+- feat: Route reward Discord announcements into a configurable thread.
+
 ## [0.5.0] - 2026-10-13 | World reward catalog
 
 - feat: keep the first sector discoverer immediately and announce the destination region after a configurable delay.

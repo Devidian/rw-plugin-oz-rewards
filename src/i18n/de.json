@@ -179,6 +179,7 @@
       }
     },
     "setting": {
+      "discordrewardsthreadtopic": {"label": "Belohnungen-Thread", "desc": "Leer verwendet den Plugin-Namen. Gleicher Kanal und Thread-Titel nutzen denselben Thread."},
       "aggressiveanimalkill": {
         "enabled": {
           "desc": "Aktiviert Belohnungen für Kills aggressiver Tiere.",

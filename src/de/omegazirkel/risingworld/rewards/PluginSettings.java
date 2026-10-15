@@ -53,6 +53,7 @@ public class PluginSettings {
     public String sectorDiscoveryMessageType = "yell";
     public int sectorDiscoveryRegionDelaySeconds = 10;
     public long discordRewardsChannelId = 0;
+    public String discordRewardsThreadTopic = "";
     public boolean sendPluginWelcome = false;
 
     private static OZLogger logger() {
@@ -128,6 +129,7 @@ public class PluginSettings {
             sectorDiscoveryRegionDelaySeconds = Math.max(0,
                     integer(settings, "sectorDiscovery.regionDelaySeconds", sectorDiscoveryRegionDelaySeconds));
             discordRewardsChannelId = lng(settings, "discordRewardsChannelId", discordRewardsChannelId);
+            discordRewardsThreadTopic = settings.getProperty("discordRewardsThreadTopic", "");
             sendPluginWelcome = bool(settings, "sendPluginWelcome", sendPluginWelcome);
             logger().info(plugin.getName() + " Plugin settings loaded");
         } catch (IOException ex) {
@@ -205,7 +207,9 @@ public class PluginSettings {
                 AdminSettingsEntry.group("discord", "Discord", "Optional Discord reward announcements."),
                 entry("discordRewardsChannelId", "Discord rewards channel",
                         "Discord channel id for reward announcements; 0 disables Discord reward messages.",
-                        discordRewardsChannelId, "0", AdminSettingsType.STRING));
+                        discordRewardsChannelId, "0", AdminSettingsType.STRING),
+                entry("discordRewardsThreadTopic", "Discord rewards thread",
+                        "Blank uses the plugin display name.", discordRewardsThreadTopic, "", AdminSettingsType.STRING));
     }
 
     private AdminSettingsEntry entry(String key, String label, String description, Object value, String defaultValue,

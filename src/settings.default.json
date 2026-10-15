@@ -9,6 +9,7 @@
     "streakLimit": "7"
   },
   "discordRewardsChannelId": "0",
+  "discordRewardsThreadTopic": "",
   "enemyNpcKill": {
     "enabled": "true"
   },

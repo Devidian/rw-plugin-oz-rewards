@@ -179,6 +179,7 @@
       }
     },
     "setting": {
+      "discordrewardsthreadtopic": {"label": "Rewards thread", "desc": "Blank uses the plugin display name. The same channel and thread name reuse one thread."},
       "aggressiveanimalkill": {
         "enabled": {
           "desc": "Enables aggressive animal kill rewards.",
