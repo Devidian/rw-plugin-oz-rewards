@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+- Add a player-erasure API for sector rewards and anonymize retained first-discovery records.
+
 ## [0.5.1] - 2026-10-15 | Discord event threads
 
 - feat: Route reward Discord announcements into a configurable thread.

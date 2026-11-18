@@ -17,6 +17,36 @@ public class SectorDiscoveryStore {
         initSchema();
     }
 
+    /** Deletes personal reward history and keeps global discoveries without a player reference. */
+    public synchronized boolean erasePlayerData(int playerDbId) {
+        if (playerDbId <= 0) return false;
+        try {
+            if (!connection.getAutoCommit()) return false;
+            connection.setAutoCommit(false);
+            try (PreparedStatement personal = connection.prepareStatement(
+                    "DELETE FROM sector_player_discoveries WHERE player_db_id=?");
+                    PreparedStatement global = connection.prepareStatement(
+                            "UPDATE sector_discoveries SET first_player_db_id=0, region_announced=1 "
+                                    + "WHERE first_player_db_id=?")) {
+                personal.setInt(1, playerDbId);
+                personal.executeUpdate();
+                global.setInt(1, playerDbId);
+                global.executeUpdate();
+                connection.commit();
+                return true;
+            } catch (SQLException ex) {
+                connection.rollback();
+                Rewards.logger().error("Sector discovery erasure failed: " + ex.getMessage());
+                return false;
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException ex) {
+            Rewards.logger().error("Sector discovery erasure failed: " + ex.getMessage());
+            return false;
+        }
+    }
+
     private void initSchema() {
         try (Statement statement = connection.createStatement()) {
             dropUnreleasedBiomeSchema(statement);

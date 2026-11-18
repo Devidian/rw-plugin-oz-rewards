@@ -6,6 +6,8 @@ Sector discovery messages use the world region name at the player position, incl
 
 OZ Rewards adds wallet rewards for recurring and event-based player activity in Rising World.
 
+The coordinated player-erasure API removes the player's sector reward rows and clears their ID from retained global first-discovery records. Login and milestone settings are removed by OZ Tools after plugin erasure.
+
 ## Features
 
 - Daily login reward once per GMT date

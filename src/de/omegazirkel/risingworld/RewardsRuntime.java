@@ -30,6 +30,7 @@ import de.omegazirkel.risingworld.tools.ui.PlayerPluginSettingsOverlay;
 import de.omegazirkel.risingworld.tools.ui.PluginInfoStatusProviders;
 import de.omegazirkel.risingworld.tools.ui.PluginMenuManager;
 import de.omegazirkel.risingworld.tools.ui.PluginShortcutVisibility;
+import de.omegazirkel.risingworld.tools.privacy.PlayerErasureService;
 import net.risingworld.api.Plugin;
 import net.risingworld.api.Server;
 import net.risingworld.api.World;
@@ -48,6 +49,7 @@ import net.risingworld.api.utils.Vector2i;
 import net.risingworld.api.utils.Vector3i;
 
 class RewardsRuntime extends Plugin {
+    private PlayerErasureService.Registration erasureRegistration;
     static final String PLUGIN_IDENTIFIER = "OZ - Rewards";
     static final String COMMAND = "rewards";
     static final String LOGIN_LAST_GMT_DATE_KEY = "oz.rewards.login.lastGmtDate";
@@ -61,6 +63,13 @@ class RewardsRuntime extends Plugin {
     private static PluginGUI gui;
     private static Connection sqliteCon;
     private static SectorDiscoveryStore sectorDiscoveryStore;
+
+    /** Called by the local erasure coordinator before shared player settings are removed. */
+    public boolean erasePlayerData(int playerDbId) {
+        if (sectorDiscoveryStore == null || playerSettings == null || !sectorDiscoveryStore.erasePlayerData(playerDbId)) return false;
+        playerSettings.erasePlayer(playerDbId);
+        return true;
+    }
     private static KillRewardCatalog killRewardCatalog;
     public static PlayerSettings playerSettings;
     public static String name;
@@ -75,6 +84,7 @@ class RewardsRuntime extends Plugin {
 
     @Override
     public void onEnable() {
+        erasureRegistration = PlayerErasureService.register("rewards", request -> erasePlayerData(request.playerDbId()));
         name = this.getDescription("name");
         s = PluginSettings.getInstance((Rewards) this);
         t = I18n.getInstance(this);
@@ -116,6 +126,7 @@ class RewardsRuntime extends Plugin {
 
     @Override
     public void onDisable() {
+        if (erasureRegistration != null) erasureRegistration.close();
         if (name != null) {
             PluginShortcutVisibility.unregister(name);
             PluginInfoStatusProviders.unregisterProvider(name);
@@ -377,6 +388,8 @@ class RewardsRuntime extends Plugin {
         float remaining = Math.max(0.1f, (s.sectorDiscoveryRegionDelaySeconds * 1000L - elapsed) / 1000f);
         executeDelayed(remaining, () -> {
             if (!observer.isConnected() || !observer.getSectorPosition().equals(sectorX, sectorY)) return;
+            SectorDiscoveryStore.PendingAnnouncement current = sectorDiscoveryStore.pendingAnnouncement(sectorX, sectorY);
+            if (current == null || current.firstPlayerDbId() != pending.firstPlayerDbId()) return;
             String region = sectorRegion(observer);
             if ("Unknown".equalsIgnoreCase(region)
                     || !sectorDiscoveryStore.markRegionAnnounced(sectorX, sectorY, region)) return;
@@ -546,7 +559,7 @@ class RewardsRuntime extends Plugin {
             lang = "en";
         }
         String message = t.get(messageKey, lang)
-                .replace("PH_PLAYER", player.getName())
+                .replace("PH_PLAYER", discordPlayerLabel(player))
                 .replace("PH_AMOUNT", Long.toString(amount));
         DiscordConnect.sendDiscordMessage(message, s.discordRewardsChannelId);
     }
@@ -561,11 +574,17 @@ class RewardsRuntime extends Plugin {
         }
         String localizedRegion = "Unknown".equalsIgnoreCase(region) ? t.get("tc.region.unknown", lang) : region;
         String message = t.get("tc.discord.sector.first.discovery", lang)
-                .replace("PH_PLAYER", player.getName())
+                .replace("PH_PLAYER", discordPlayerLabel(player))
                 .replace("PH_AMOUNT", Long.toString(amount))
                 .replace("PH_SECTOR_X", Integer.toString(sectorX))
                 .replace("PH_SECTOR_Y", Integer.toString(sectorY))
                 .replace("PH_REGION", localizedRegion);
         DiscordConnect.sendDiscordMessage(message, s.discordRewardsChannelId);
+    }
+
+    private static String discordPlayerLabel(Player player) {
+        return de.omegazirkel.risingworld.tools.ExternalDataConsent.isGranted(player,
+                de.omegazirkel.risingworld.tools.ExternalDataConsent.Purpose.DISCORD)
+                ? player.getName() : "Spieler #" + player.getDbID();
     }
 }
