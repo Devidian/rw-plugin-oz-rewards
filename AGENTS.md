@@ -31,7 +31,7 @@ Wallet and Discord integrations must remain reflection based unless the dependen
 - Do not duplicate reusable helpers from `rw-plugin-oz-tools`.
 - Keep Wallet calls limited to the public default-currency API unless the task explicitly requires another currency.
 - Treat changes to player settings keys or config keys as migration-sensitive.
-- Follow `.codex/agents.toml` and `docs/policies/repository-policy.md`.
+- Follow `.codex/agents/*.toml` and `docs/policies/repository-policy.md`.
 - Keep `README.md`, `HISTORY.md`, and `PLANS.md` aligned with behavior changes.
 - Keep the `plugin.yml` entry class as the sole Rising World `Listener` and sole
   `registerEventListener(...)` target. It may only wire lifecycle, delegate
