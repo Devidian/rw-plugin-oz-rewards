@@ -11,4 +11,12 @@ Planning is stored in repository-local docs.
 
 Every implementation plan must include objective, ownership, dependencies, risks, validation strategy, affected repositories/plugins, rollback considerations, and a markdown checkbox checklist.
 
+## Player erasure
+
+- [x] Delete personal sector rewards and anonymize retained global discoveries in one SQLite transaction.
+- [x] Stop delayed first-discovery announcements after erasure.
+- [ ] Connect to the shared erasure coordinator and verify a pending announcement on Development.
+
+The SQLite test covers idempotence and unrelated reward retention. A database backup is the rollback point before the full erasure action is enabled.
+
 Discord event thread routing is implemented locally; Development Discord validation and the separately authorized release remain open. Configuration is documented in README.md.
