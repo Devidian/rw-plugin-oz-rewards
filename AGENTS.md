@@ -45,3 +45,7 @@ Wallet and Discord integrations must remain reflection based unless the dependen
 - Run `mvn -B -DskipTests package`.
 - Run `mvn -B test` when tests are present.
 - Runtime-smoke login, NPC kill, lightning workaround, missing Wallet, and optional Discord scenarios before release.
+
+## CodeMap
+
+For unfamiliar modules and cross-repository impact, start at [the local CodeMap](.codemap/README.md) and use the [CodeMap skill](.agents/skills/codemap/SKILL.md). Verify relevant source and update and validate affected entries when indexed information changes.
