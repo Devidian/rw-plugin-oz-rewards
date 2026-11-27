@@ -9,9 +9,10 @@ Handle player and world events, calculate reward eligibility and request Wallet 
 
 - [`RewardsRuntime`](../../src/de/omegazirkel/risingworld/RewardsRuntime.java) — event processing and payment.
 - [`KillRewardCatalog`](../../src/de/omegazirkel/risingworld/rewards/KillRewardCatalog.java) — kill reward catalog.
-- [`SectorDiscoveryStore`](../../src/de/omegazirkel/risingworld/rewards/SectorDiscoveryStore.java) — sector discovery persistence.
+- [`SectorDiscoveryStore`](../../src/de/omegazirkel/risingworld/rewards/SectorDiscoveryStore.java) — first discoveries, pending claims, payout receipts, and player erasure.
+- [`SectorRewardPayout`](../../src/de/omegazirkel/risingworld/rewards/SectorRewardPayout.java) — attempt and recovery policy for default-currency sector rewards.
 - [`Wallet`](../../src/de/omegazirkel/risingworld/rewards/Wallet.java) — shared Wallet bridge adapter.
-- [Tests](../../src-test/de/omegazirkel/risingworld/rewards/) cover repository behavior. Verify relevant scenarios before implementing changes.
+- [Sector payout tests](../../src-test/de/omegazirkel/risingworld/rewards/SectorRewardPayoutTest.java) exercise claim persistence, Wallet outcomes and replay protection.
 - [Repository index](../README.md) and [settings defaults](../../src/settings.default.json).
 
 ## Dependencies

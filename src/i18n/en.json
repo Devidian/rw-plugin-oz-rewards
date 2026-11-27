@@ -56,7 +56,8 @@
       },
       "sector": {
         "first": {
-          "discovery": "PH_PLAYER discovered sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION) first and received PH_AMOUNT coins."
+          "discovery": "PH_PLAYER discovered sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION) first and received PH_AMOUNT coins.",
+          "discovery_unpaid": "PH_PLAYER discovered sector PH_SECTOR_X PH_SECTOR_Y (PH_REGION) first."
         }
       }
     },
@@ -120,10 +121,12 @@
       },
       "sector": {
         "first": {
-          "discovery": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e entered sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) first and received \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins."
+          "discovery": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e entered sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) first and received \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins.",
+          "discovery_unpaid": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e entered sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) first."
         },
         "personal": {
-          "discovery": "Sector discovery reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins for sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e)."
+          "discovery": "Sector discovery reward: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins for sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e).",
+          "payout": "Sector discovery reward paid: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e coins for sector \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e."
         }
       }
     },

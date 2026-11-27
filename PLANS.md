@@ -20,3 +20,9 @@ Every implementation plan must include objective, ownership, dependencies, risks
 The SQLite test covers idempotence and unrelated reward retention. A database backup is the rollback point before the full erasure action is enabled.
 
 Discord event thread routing is implemented locally; Development Discord validation and the separately authorized release remain open. Configuration is documented in README.md.
+
+## Sector payout recovery
+
+- [x] Store eligibility and amount before Wallet calls. Cover restart, definite and ambiguous failure, receipt failure, and erasure with local SQLite fixtures.
+- [ ] Verify spawn and movement retries on isolated Development with the real Wallet provider. Cover both reward modes, disabled rewards, locale messages, and delayed announcements.
+- [ ] Reconcile any unresolved claims before rollback to an older plugin that does not check the claim table.

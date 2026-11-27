@@ -56,7 +56,8 @@
       },
       "sector": {
         "first": {
-          "discovery": "PH_PLAYER hat Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION) zuerst entdeckt und PH_AMOUNT Münzen erhalten."
+          "discovery": "PH_PLAYER hat Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION) zuerst entdeckt und PH_AMOUNT Münzen erhalten.",
+          "discovery_unpaid": "PH_PLAYER hat Sektor PH_SECTOR_X PH_SECTOR_Y (PH_REGION) zuerst entdeckt."
         }
       }
     },
@@ -120,10 +121,12 @@
       },
       "sector": {
         "first": {
-          "discovery": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat als erstes Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) betreten und \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen erhalten."
+          "discovery": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat als erstes Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) betreten und \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen erhalten.",
+          "discovery_unpaid": "\u003ccolor\u003dyellow\u003ePH_PLAYER\u003c/color\u003e hat als erstes Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e) betreten."
         },
         "personal": {
-          "discovery": "Sektor-Erkundungsbelohnung: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen für Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e)."
+          "discovery": "Sektor-Erkundungsbelohnung: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen für Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e (\u003ccolor\u003dyellow\u003ePH_REGION\u003c/color\u003e).",
+          "payout": "Sektor-Erkundungsbelohnung ausgezahlt: \u003ccolor\u003dyellow\u003ePH_AMOUNT\u003c/color\u003e Münzen für Sektor \u003ccolor\u003dyellow\u003ePH_SECTOR_X PH_SECTOR_Y\u003c/color\u003e."
         }
       }
     },

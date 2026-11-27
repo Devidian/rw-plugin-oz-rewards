@@ -15,6 +15,9 @@ import de.omegazirkel.risingworld.rewards.KillRewardCatalog;
 import de.omegazirkel.risingworld.rewards.PluginSettings;
 import de.omegazirkel.risingworld.rewards.RewardsPluginInfoStatusProvider;
 import de.omegazirkel.risingworld.rewards.SectorDiscoveryStore;
+import de.omegazirkel.risingworld.rewards.SectorDiscoveryStore.RewardClaim;
+import de.omegazirkel.risingworld.rewards.SectorDiscoveryStore.RewardTerms;
+import de.omegazirkel.risingworld.rewards.SectorRewardPayout;
 import de.omegazirkel.risingworld.rewards.Wallet;
 import de.omegazirkel.risingworld.rewards.ui.RewardsPlayerPluginData;
 import de.omegazirkel.risingworld.rewards.ui.RewardsPlayerPluginSettings;
@@ -65,7 +68,7 @@ class RewardsRuntime extends Plugin {
     private static SectorDiscoveryStore sectorDiscoveryStore;
 
     /** Called by the local erasure coordinator before shared player settings are removed. */
-    public boolean erasePlayerData(int playerDbId) {
+    public synchronized boolean erasePlayerData(int playerDbId) {
         if (sectorDiscoveryStore == null || playerSettings == null || !sectorDiscoveryStore.erasePlayerData(playerDbId)) return false;
         playerSettings.erasePlayer(playerDbId);
         return true;
@@ -177,6 +180,7 @@ class RewardsRuntime extends Plugin {
                     .replace("PH_PLUGIN_CMD", COMMAND)
                     .replace("PH_PLUGIN_VERSION", getDescription("version")));
         }
+        resumeSectorRewards(player, null);
         grantDailyLoginReward(player);
         grantLocationMilestoneRewards(player, player.getChunkPosition());
     }
@@ -344,41 +348,54 @@ class RewardsRuntime extends Plugin {
 
         int sectorX = sector.x;
         int sectorY = sector.y;
-        boolean firstDiscoverer = sectorDiscoveryStore.recordGlobalDiscovery(sectorX, sectorY, player.getDbID(), "Unknown");
-        if ("firstOnly".equalsIgnoreCase(s.sectorDiscoveryMode) && !firstDiscoverer) {
-            scheduleSectorAnnouncement(player, sectorX, sectorY);
-            return;
-        }
-        if (sectorDiscoveryStore.hasPlayerDiscovery(sectorX, sectorY, player.getDbID())) {
-            scheduleSectorAnnouncement(player, sectorX, sectorY);
-            return;
-        }
-
         long baseReward = calculateSectorDiscoveryBaseReward(sectorX, sectorY);
-        long reward = firstDiscoverer ? multiplyReward(baseReward, s.sectorDiscoveryFirstDiscovererMultiplier)
-                : baseReward;
-        String reason = sectorDiscoveryReason(player, sectorX, sectorY, firstDiscoverer);
-        if (!depositReward(player, reward, reason)) {
-            scheduleSectorAnnouncement(player, sectorX, sectorY);
+        try {
+            sectorDiscoveryStore.recordDiscoveryClaim(sectorX, sectorY, player.getDbID(),
+                    "firstOnly".equalsIgnoreCase(s.sectorDiscoveryMode),
+                    new RewardTerms(multiplyReward(baseReward, s.sectorDiscoveryFirstDiscovererMultiplier),
+                            sectorDiscoveryReason(player, sectorX, sectorY, true)),
+                    new RewardTerms(baseReward, sectorDiscoveryReason(player, sectorX, sectorY, false)));
+        } catch (SQLException ex) {
+            logger().error("Could not save sector discovery: " + ex.getMessage());
             return;
         }
-        if (!sectorDiscoveryStore.recordPlayerReward(sectorX, sectorY, player.getDbID(), reward)) {
-            logger().warn("Sector reward was deposited but could not be recorded for player " + player.getDbID()
-                    + " in sector " + sectorX + "," + sectorY + ".");
-        }
+        resumeSectorRewards(player, sector);
         scheduleSectorAnnouncement(player, sectorX, sectorY);
+    }
 
-        if (!firstDiscoverer) {
-            executeDelayed(Math.max(0.1f, s.sectorDiscoveryRegionDelaySeconds), () -> {
-                if (!player.isConnected() || !player.getSectorPosition().equals(sectorX, sectorY)) return;
-                String region = sectorRegion(player);
-                player.sendTextMessage(t.get("tc.msg.sector.personal.discovery", player)
-                        .replace("PH_AMOUNT", Long.toString(reward))
-                        .replace("PH_SECTOR_X", Integer.toString(sectorX))
-                        .replace("PH_SECTOR_Y", Integer.toString(sectorY))
-                        .replace("PH_REGION", localizedRegion(player, region)));
-            });
+    private synchronized void resumeSectorRewards(Player player, Vector2i sector) {
+        if (!s.sectorDiscoveryEnabled || sectorDiscoveryStore == null) return;
+        try {
+            for (RewardClaim claim : SectorRewardPayout.payPending(sectorDiscoveryStore, player.getDbID(),
+                    Wallet.isAvailable(), pending -> Wallet.depositDefault(pending.playerDbId(), pending.amount(),
+                            pending.reason() + " [" + pending.id() + "]", PLUGIN_IDENTIFIER))) {
+                boolean inDiscoveredSector = sector != null && sector.equals(claim.sectorX(), claim.sectorY());
+                if (inDiscoveredSector && claim.firstDiscovery()
+                        && sectorDiscoveryStore.pendingAnnouncement(claim.sectorX(), claim.sectorY()) != null) {
+                    continue;
+                }
+                if (inDiscoveredSector && !claim.firstDiscovery()) {
+                    executeDelayed(Math.max(0.1f, s.sectorDiscoveryRegionDelaySeconds), () -> {
+                        if (player.isConnected()) sendSectorRewardNotice(player, claim,
+                                player.getSectorPosition().equals(claim.sectorX(), claim.sectorY())
+                                        ? localizedRegion(player, sectorRegion(player)) : null);
+                    });
+                } else {
+                    sendSectorRewardNotice(player, claim, null);
+                }
+            }
+        } catch (SQLException ex) {
+            logger().error("Could not load pending sector rewards: " + ex.getMessage());
         }
+    }
+
+    private void sendSectorRewardNotice(Player player, RewardClaim claim, String region) {
+        String key = region == null ? "tc.msg.sector.personal.payout" : "tc.msg.sector.personal.discovery";
+        player.sendTextMessage(t.get(key, player)
+                .replace("PH_AMOUNT", Long.toString(claim.amount()))
+                .replace("PH_SECTOR_X", Integer.toString(claim.sectorX()))
+                .replace("PH_SECTOR_Y", Integer.toString(claim.sectorY()))
+                .replace("PH_REGION", region == null ? "" : region));
     }
 
     private void scheduleSectorAnnouncement(Player observer, int sectorX, int sectorY) {
@@ -396,9 +413,10 @@ class RewardsRuntime extends Plugin {
             String firstName = Server.getLastKnownPlayerName(pending.firstPlayerDbId());
             if (firstName == null || firstName.isBlank()) firstName = "#" + pending.firstPlayerDbId();
             for (Player recipient : Server.getAllPlayers()) {
-                String message = t.get("tc.msg.sector.first.discovery", recipient)
+                String key = current.reward() > 0 ? "tc.msg.sector.first.discovery" : "tc.msg.sector.first.discovery_unpaid";
+                String message = t.get(key, recipient)
                         .replace("PH_PLAYER", firstName)
-                        .replace("PH_AMOUNT", Long.toString(pending.reward()))
+                        .replace("PH_AMOUNT", Long.toString(current.reward()))
                         .replace("PH_SECTOR_X", Integer.toString(sectorX))
                         .replace("PH_SECTOR_Y", Integer.toString(sectorY))
                         .replace("PH_REGION", localizedRegion(recipient, region));
@@ -406,7 +424,7 @@ class RewardsRuntime extends Plugin {
                 else recipient.sendYellMessage(message, 5, true);
             }
             Player firstPlayer = Server.getPlayerByDbID(pending.firstPlayerDbId());
-            if (firstPlayer != null) sendSectorDiscoveryDiscord(firstPlayer, pending.reward(), sectorX, sectorY, region);
+            if (firstPlayer != null) sendSectorDiscoveryDiscord(firstPlayer, current.reward(), sectorX, sectorY, region);
         });
     }
 
@@ -573,7 +591,8 @@ class RewardsRuntime extends Plugin {
             lang = "en";
         }
         String localizedRegion = "Unknown".equalsIgnoreCase(region) ? t.get("tc.region.unknown", lang) : region;
-        String message = t.get("tc.discord.sector.first.discovery", lang)
+        String key = amount > 0 ? "tc.discord.sector.first.discovery" : "tc.discord.sector.first.discovery_unpaid";
+        String message = t.get(key, lang)
                 .replace("PH_PLAYER", discordPlayerLabel(player))
                 .replace("PH_AMOUNT", Long.toString(amount))
                 .replace("PH_SECTOR_X", Integer.toString(sectorX))

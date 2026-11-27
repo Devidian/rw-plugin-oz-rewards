@@ -6,7 +6,7 @@ Sector discovery messages use the world region name at the player position, incl
 
 OZ Rewards adds wallet rewards for recurring and event-based player activity in Rising World.
 
-The coordinated player-erasure API removes the player's sector reward rows and clears their ID from retained global first-discovery records. Login and milestone settings are removed by OZ Tools after plugin erasure.
+The coordinated player-erasure API removes the player's sector reward rows and unresolved claims, and clears their ID from retained global first-discovery records. Login and milestone settings are removed by OZ Tools after plugin erasure.
 
 ## Features
 
@@ -94,6 +94,10 @@ Sector discovery formula:
 ```
 
 In `firstOnly` mode, only the global first discoverer receives the formula result multiplied by `firstDiscovererMultiplier`. In `perPlayer` mode, the global first discoverer receives the multiplied amount, and later players receive the base amount once for that sector.
+
+Sector discovery saves the eligible player and amount before requesting a Wallet deposit. Pending claims are retried on spawn and when the player enters a sector or biome. Payouts use Wallet's default currency at the time of payment. Turning off sector rewards pauses payouts and prevents new claims. Existing discoveries are not backfilled.
+
+If a deposit may already have succeeded, the claim remains in `REVIEW_REQUIRED`. Administrators can inspect `sector_reward_claims` on a copy of the Rewards database and match its `claim_id` against the reason in the Wallet ledger. Verify the ledger before deciding how to settle a claim. An absent local reward receipt alone is insufficient evidence for a second deposit.
 
 ## Player Settings
 
