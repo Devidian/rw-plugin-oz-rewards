@@ -225,19 +225,6 @@ public class PluginSettings {
                 newValue -> SettingsFileEditor.writeValue(settingsPath(), key, newValue));
     }
 
-    private AdminSettingsEntry readOnlyEntry(String key, String label, String description, Object value,
-            String defaultValue, AdminSettingsType type) {
-        return new AdminSettingsEntry(
-                key,
-                label,
-                description,
-                String.valueOf(value),
-                defaultValue,
-                type,
-                false,
-                null);
-    }
-
     private AdminSettingsEntry selectEntry(String key, String label, String description, String value,
             String defaultValue, List<String> options) {
         return new AdminSettingsEntry(key, label, description, value, defaultValue, AdminSettingsType.SELECT,
