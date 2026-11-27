@@ -4,9 +4,10 @@
 
 ## Unreleased
 
-- Keep eligible sector rewards when Wallet is unavailable and hold ambiguous deposits for review to prevent repeat payments.
+## [0.5.3] - 2026-11-27 | OZ Rewards payout recovery
 
-- Add a player-erasure API for sector rewards and anonymize retained first-discovery records.
+- Sector discovery eligibility survives Wallet outages and reloads. Confirmed payouts are recorded once. Uncertain payments stay pending for review to prevent duplicate deposits.
+- Review unresolved claims before rollback and retain the corresponding Wallet entries.
 
 ## [0.5.1] - 2026-10-15 | Discord event threads
 
